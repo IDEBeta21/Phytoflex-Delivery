@@ -24,7 +24,9 @@ function App({navigation}) {
           options={{ 
             title: 'All Orders',
             headerStyle: {
-              backgroundColor: '#1D4123'
+              backgroundColor: '#1D4123',
+              elevation: 0,
+              shadowOpacity: 0
             },
             headerTintColor: 'white',
             headerTitleStyle: {
