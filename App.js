@@ -1,14 +1,55 @@
+import React from 'react';
+import {
+  View, Text, StyleSheet
+} from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+import { createStackNavigator } from '@react-navigation/stack';
+const Stack = createStackNavigator();
+
+import MyTabs from './global/bottomNav';
+
+import AppLoading from 'expo-app-loading';
+import { useFonts } from 'expo-font';
+
+function FuncBottomNav({navigation}) {
+  return(
+    <MyTabs navigation={navigation}/>
   );
 }
+
+const Tab = createMaterialBottomTabNavigator();
+
+function App() {
+
+   let [ fontsLoaded ] = useFonts({
+    'poppins-regular': require('./assets/assets/fonts/Poppins-Regular.ttf'),
+    'poppins-semiBold': require('./assets/assets/fonts/Poppins-SemiBold.ttf'),
+    'poppins-light': require('./assets/assets/fonts/Poppins-Light.ttf'),
+    'poppins-italic': require('./assets/assets/fonts/Poppins-Italic.ttf'),
+  })
+
+  if (fontsLoaded) {
+    return (
+      
+      <NavigationContainer>
+          <Stack.Navigator
+          screenOptions={{
+          headerShown: false
+        }}
+          >
+          <Stack.Screen name="MyTabs" component={FuncBottomNav} />
+          </Stack.Navigator>
+      </NavigationContainer>
+    );
+  } else {
+    return (<AppLoading/>);
+  }
+}
+
+export default App;
 
 const styles = StyleSheet.create({
   container: {
