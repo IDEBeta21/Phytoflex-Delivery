@@ -11,12 +11,37 @@ const Stack = createStackNavigator();
 
 import MyTabs from './global/bottomNav';
 
+// Import landing screens
+import Login from './screens/landing/Login';
+import ForgotPassword from './screens/landing/ForgotPassword';
+
+// Import admin screen 
+import Admin from './screens/admin/admin';
+
 import AppLoading from 'expo-app-loading';
 import { useFonts } from 'expo-font';
 
 function FuncBottomNav({navigation}) {
   return(
     <MyTabs navigation={navigation}/>
+  );
+}
+
+function FuncLogin({navigation}) {
+  return(
+    <Login navigation={navigation}/>
+  );
+}
+
+function FuncForgotPassword({navigation}) {
+  return(
+    <ForgotPassword navigation={navigation}/>
+  );
+}
+
+function FuncAdmin({navigation}) {
+  return(
+    <Admin navigation={navigation}/>
   );
 }
 
@@ -39,7 +64,11 @@ function App() {
           screenOptions={{
           headerShown: false
         }}
+        initialRouteName={'Login'}
           >
+          <Stack.Screen name="Login" component={FuncLogin} />
+          <Stack.Screen name="ForgotPassword" component={FuncForgotPassword} />
+          <Stack.Screen name="Admin" component={FuncAdmin} />
           <Stack.Screen name="MyTabs" component={FuncBottomNav} />
           </Stack.Navigator>
       </NavigationContainer>
