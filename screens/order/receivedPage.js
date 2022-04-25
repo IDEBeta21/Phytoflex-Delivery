@@ -71,7 +71,7 @@ export default function ReceivedPage({navigation, route}) {
                   <View style={{flexDirection: 'row', marginTop: 20}}>
                     <View style={{flex:1, paddingRight: 5}}>
                       <View style={{flex: 1, borderColor: Colors.primary, borderWidth: 1, borderRadius: 7, alignItems: 'center', justifyContent: 'center'}}>
-                        <TouchableOpacity onPress={() => gotoHome()}>
+                        <TouchableOpacity onPress={() => navigation.navigate('FailedOrderReport')}>
                           <Text style={{color: Colors.primary, fontSize: 16, fontFamily: 'poppins-regular', }}>Failed</Text>
                         </TouchableOpacity></View>
                       </View>

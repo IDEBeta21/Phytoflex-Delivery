@@ -11,6 +11,7 @@ import OrderHomePage from "./orderMainPage"
 import NewOrderPage from './NewOrderScanner'
 import PickUpOrdersPage from './pickUpOrders'
 import PickUpPage from './pickUpPage'
+import FailedOrderReport from './makeAReport'
 
 function FuncOrderPage({route, navigation}) {
   return (
@@ -33,6 +34,12 @@ function FuncPickUpPage({route, navigation}) {
 function FuncPickUpHomePage({route, navigation}) {
   return (
     <PickUpPage navigation={navigation} route = {route}/>
+  );
+}
+
+function FuncFailedOrderReportPage({route, navigation}) {
+  return (
+    <FailedOrderReport navigation={navigation} route = {route}/>
   );
 }
 
@@ -96,6 +103,24 @@ function App({navigation}) {
           name="PickUpPage"
           component={FuncPickUpHomePage}
           options={{ 
+            headerStyle: {
+              backgroundColor: '#1D4123',
+              elevation: 0,
+              shadowOpacity: 0
+            },
+            headerTintColor: 'white',
+            headerTitleStyle: {
+              fontFamily: 'poppins-semiBold',
+              fontSize: 18,
+            }
+          }}
+        />
+
+      <Stack.Screen
+          name="FailedOrderReport"
+          component={FuncFailedOrderReportPage}
+          options={{ 
+            title: 'Make a Report',
             headerStyle: {
               backgroundColor: '#1D4123',
               elevation: 0,

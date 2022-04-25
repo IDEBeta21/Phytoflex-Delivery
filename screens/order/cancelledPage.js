@@ -65,18 +65,21 @@ export default function CancelledPage({navigation, route}) {
                 <View style={{borderColor: Colors.primary, borderWidth: 1, borderRadius: 5, marginBottom: 10, marginTop: 10, padding: 15,  width: 330  }}>
                   <View style={{marginBottom: 10}}>
                     <View style={{flex: 6}}>
-                      <PFText>Order ID: {item.orderId}</PFText>
+                      <PFText weight={'semi-bold'}>Order ID: {item.orderId}</PFText>
                     </View>
                   </View>
 
-                  <PFText size={16} weight={'semi-bold'}>Name: {item.customerName}</PFText>
+                  <View style={{flexDirection: 'row', flex: 6}}>
+                      <PFText size={16}>Name: </PFText>
+                      <PFText size={16} weight={'semi-bold'}>{item.customerName}</PFText>
+                  </View>
                   <PFText>Contact Number: {item.contactNumber}</PFText>
                   <PFText>Address: {item.deliveryAddress}</PFText>
 
                   <View style={{marginTop: 15}}>
                     <View style={{flexDirection: 'row', flex: 6}}>
                       <PFText size={12}>Status: </PFText>
-                      <PFText size={12} weight={'semi-bold'} color={'firebrick'}>{item.status}</PFText>
+                      <PFText size={12} color={'firebrick'}>{item.status}</PFText>
                     </View>
                   </View>
 
