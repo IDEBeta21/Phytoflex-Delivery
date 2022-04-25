@@ -16,7 +16,24 @@ import Login from './screens/landing/Login';
 import ForgotPassword from './screens/landing/ForgotPassword';
 
 // Import admin screen 
-import Admin from './screens/admin/admin';
+// import Admin from './screens/admin/admin';
+import MainAdmin from './screens/admin/mainAdmin';
+
+// Import firebase
+import firebase from 'firebase';
+
+// firebase config
+const firebaseConfig = {
+  apiKey: "AIzaSyC9WVlZosV9ygptBGcvY9H6MxbuI2EaGx8",
+  authDomain: "phytoflex-3f53f.firebaseapp.com",
+  projectId: "phytoflex-3f53f",
+  storageBucket: "phytoflex-3f53f.appspot.com",
+  messagingSenderId: "437461344883",
+  appId: "1:437461344883:web:5388696aaa0445c758c006"
+};
+if (firebase.apps.length == 0) {
+  const firebaseApp = firebase.initializeApp(firebaseConfig);
+}
 
 import AppLoading from 'expo-app-loading';
 import { useFonts } from 'expo-font';
@@ -41,7 +58,7 @@ function FuncForgotPassword({navigation}) {
 
 function FuncAdmin({navigation}) {
   return(
-    <Admin navigation={navigation}/>
+    <MainAdmin navigation={navigation}/>
   );
 }
 
