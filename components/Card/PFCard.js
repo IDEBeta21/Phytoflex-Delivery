@@ -210,6 +210,7 @@ cardContentStyle) => {
 
       <Card.Content style={{...styles.cardShopReviewContent}}>
               <View style={{flexDirection:'column'}}>
+           
               <PFText weight='semi-bold' size = {18}>{customerName}</PFText>
               <PFText weight='light'>{date}</PFText>
               <StarRating
@@ -344,6 +345,37 @@ cardContentStyle) => {
             </View>
       
                
+    </Card>
+  </View>
+
+  )
+}
+
+export const PFCardPickUpOrders = ({orderId, customerName, contactNumber, deliveryAddress, onPress = () => {}}, style, 
+cardContentStyle) => {
+
+
+  return(
+
+    <View style={{...styles.cardShopReview, ...style}}>
+    <Card style={{flex: 1}} onPress={() => onPress()}>
+      <View style= {{flexDirection:'row'}}>
+     
+
+      <Card.Content style={{...styles.cardShopReviewContent}}>
+              <View style={{flexDirection:'column'}}>
+              <PFText>Order ID: {orderId}</PFText>
+              <PFText>Customer Name:</PFText>
+              <PFText weight='semi-bold' size = {18}>{customerName}</PFText>
+              <PFText>Contact Number:</PFText>
+              <PFText weight='light'>{contactNumber}</PFText>
+              <PFText>Delivery Address:</PFText>
+              <PFText weight='light'>{deliveryAddress}</PFText>
+               </View>
+      </Card.Content>
+       
+            </View>
+    
     </Card>
   </View>
 

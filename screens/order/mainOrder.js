@@ -10,6 +10,7 @@ const Stack = createStackNavigator();
 import OrderHomePage from "./orderMainPage"
 import NewOrderPage from './NewOrderScanner'
 import PickUpOrdersPage from './pickUpOrders'
+import PickUpPage from './pickUpPage'
 
 function FuncOrderPage({route, navigation}) {
   return (
@@ -26,6 +27,12 @@ function FuncNewOrderPage({route, navigation}) {
 function FuncPickUpPage({route, navigation}) {
   return (
     <PickUpOrdersPage navigation={navigation} route = {route}/>
+  );
+}
+
+function FuncPickUpHomePage({route, navigation}) {
+  return (
+    <PickUpPage navigation={navigation} route = {route}/>
   );
 }
 
@@ -72,6 +79,23 @@ function App({navigation}) {
           component={FuncPickUpPage}
           options={{ 
             title: 'Pick Up Orders',
+            headerStyle: {
+              backgroundColor: '#1D4123',
+              elevation: 0,
+              shadowOpacity: 0
+            },
+            headerTintColor: 'white',
+            headerTitleStyle: {
+              fontFamily: 'poppins-semiBold',
+              fontSize: 18,
+            }
+          }}
+        />
+        
+      <Stack.Screen
+          name="PickUpPage"
+          component={FuncPickUpHomePage}
+          options={{ 
             headerStyle: {
               backgroundColor: '#1D4123',
               elevation: 0,

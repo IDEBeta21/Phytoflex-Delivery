@@ -2,6 +2,11 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, Button } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
+import { 
+  PFPrimaryButton, PFSecondaryButton, 
+  PFText,
+  PFFlatList
+} from '../../components'
 
 
 export default function NewOrderPage({navigation, route}) {
@@ -31,11 +36,16 @@ export default function NewOrderPage({navigation, route}) {
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-    <BarCodeScanner
+      <View style={{...styles.barcodeContainer}}>
+      <BarCodeScanner
       onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
       style={StyleSheet.absoluteFillObject}
-    />
-    {scanned && <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />}
+      />
+      {scanned && <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />}
+   
+      </View>
+      <PFText> Place the code inside the frame</PFText>
+      
   </View>
   );
 }
@@ -46,5 +56,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  barcodeContainer:{
+   
+    width: 400,
+    height: 400
   },
 });
