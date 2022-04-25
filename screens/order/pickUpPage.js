@@ -55,7 +55,7 @@ export default function PickUpPage({navigation, route}) {
             noDataMessage='No Orders'
             data={pickUpOrders}
             renderItem={(item) => (
-              <View style={{borderColor: Colors.primary, borderWidth: 1, marginBottom: 10, padding: 15,  width: 330  }}>
+              <View style={{borderColor: Colors.primary, borderWidth: 1, borderRadius: 5, marginBottom: 10, padding: 15,  width: 330  }}>
                 <View style={{flexDirection: 'row', marginBottom: 10}}>
                   <View style={{flex: 6}}>
                     <PFText>Order ID: {item.orderId}</PFText>
@@ -65,7 +65,7 @@ export default function PickUpPage({navigation, route}) {
                 <PFText size={16} weight={'semi-bold'}>Name: {item.customerName}</PFText>
                 <PFText>Contact Number: {item.contactNumber}</PFText>
                 <PFText>Address: {item.deliveryAddress}</PFText>
-                <View style={{flex:1, paddingTop: 10}}>
+                <View style={{flex:1, paddingTop: 10, marginTop: 10}}>
                     <PFSecondaryButton title={'Pick Order'} roundness={7}/>
                   </View>
 
@@ -96,9 +96,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 1,
     width: 330,
-    marginLeft: 15
-
-    
+    marginLeft: 15,
+    borderRadius: 5
   },
   scanBoxIcon: {
     height: 200,
