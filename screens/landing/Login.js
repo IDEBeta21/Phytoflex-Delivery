@@ -9,6 +9,8 @@ import {
 import * as React from 'react';
 import {useState , useEffect}from 'react';
 
+import firebase from 'firebase';
+
 export default function Login ({navigation}) {
 
     const [userEmail, setuserEmail] = useState('');
@@ -27,7 +29,29 @@ export default function Login ({navigation}) {
     });
 
     function logInClick() {
-        navigation.navigate('MyTabs');
+        // firebase.auth().signInWithEmailAndPassword(userEmail, userPass)
+        //     .then((result) => {
+        //         Alert.alert(result.message);
+        //         console.log(result);
+        //         setuserEmail('');
+        //         setUserPass('');
+        //         navigation.navigate('MyTabs');
+        //     })
+        //     .catch((error) => {
+        //         // Alert.alert(error.message);
+        //         let str_msg = error.message;
+        //         console.log(error);
+        //         ToastAndroid.showWithGravityAndOffset(
+        //             // "A wild toast appeared!",
+        //             str_msg,
+        //             ToastAndroid.LONG,
+        //             ToastAndroid.BOTTOM,
+        //             0,
+        //             150
+        //         );
+        //     });
+
+            navigation.navigate('MyTabs');
     }
 
     const funcForgotPass = () =>{

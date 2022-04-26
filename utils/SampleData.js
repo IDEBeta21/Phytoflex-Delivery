@@ -458,7 +458,63 @@ export default SampleData = {
             imageURL: 'https://mindbodygreen-res.cloudinary.com/images/dpr_2.0,c_scale,w_671,q_auto,f_auto,fl_lossy/org/gh5e595u5krzc0ajc/best-tall-houseplants-majesty-palm.jpg',
             key: '10' },
     
-    ]
+    ],
+
+
+
+
+
+    myOrders : [
+        {
+            orderId: "2110250003",
+            date: "19 April, 2:48 am",
+            customerName: "Juan Dela Cruz",
+            contactNumber: "+ (63) 956 480 5698",
+            address: "89 ilang-ilang St.Bo.Conception Tala Caloocan City Brgy 188",
+        },
+        {
+          orderId: "2110250003",
+          date: "19 April, 2:48 am",
+          customerName: "Juan Dela Cruz",
+          contactNumber: "+ (63) 956 480 5698",
+          address: "89 ilang-ilang St.Bo.Conception Tala Caloocan City Brgy 188",
+        },
+        {
+          orderId: "2110250003",
+          date: "19 April, 2:48 am",
+          customerName: "Juan Dela Cruz",
+          contactNumber: "+ (63) 956 480 5698",
+          address: "89 ilang-ilang St.Bo.Conception Tala Caloocan City Brgy 188",
+        },
+        {
+          orderId: "2110250003",
+          date: "19 April, 2:48 am",
+          customerName: "Juan Dela Cruz",
+          contactNumber: "+ (63) 956 480 5698",
+          address: "89 ilang-ilang St.Bo.Conception Tala Caloocan City Brgy 188",
+        },
+      ],
+
+      orderDetails: [
+        {
+            imageURL: 'https://picsum.photos/700',
+            itemName: 'Gymnocalycium Chin',
+            category: 'Indoor Plant',
+            price: 549,
+            quantity: 1,
+            sold: 3,
+            size: "Large"
+        },
+        {
+            imageURL: 'https://picsum.photos/700',
+            itemName: 'Pilea Cadierei Aliminum',
+            category: 'Outdoor Plant',
+            price: 305,
+            quantity: 1,
+            sold: 1,
+            size: "Small"
+        },
+    ],
 }
 
 
