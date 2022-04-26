@@ -22,7 +22,7 @@ function App({navigation}) {
           name="HistoryHomePage"
           component={FuncHistoryPage}
           options={{ 
-            title: 'History',
+            title: 'HISTORY',
             headerStyle: {
               backgroundColor: '#1D4123'
             },
