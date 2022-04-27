@@ -3,8 +3,10 @@ import {
   View, Text, StyleSheet, ScrollView, TextInput, Image, TouchableOpacity, Pressable
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
+import { NavigationContainer } from '@react-navigation/native';
 
-export default function App() {
+
+export default function App({navigation}) {
   return (
     <View>
       <StatusBar style="auto" />
@@ -50,7 +52,7 @@ export default function App() {
                                 fontFamily: 'poppins-light', 
                                 fontSize: 12,
                                 marginTop: 8,}}>
-                                Flex Inc. 370 Regalado Hwy, {'\n'} Novaliches, Quezon City,  {'\n'} Metro Manila, PHL {'\n'} Philippines 1118
+                                Flex Inc. 370 Regalado Hwy, {'\n'}Novaliches, Quezon City,  {'\n'}Metro Manila, PHL {'\n'}Philippines 1118
                         </Text>
                   </View>
               </View>
@@ -68,7 +70,11 @@ export default function App() {
                   placeholder="phytoflex@gmail.com"
                   underlineColorAndroid="transparent"
                 />
-                <TouchableOpacity>
+                <TouchableOpacity
+                activeOpacity={0.7}
+                style={styles.NavigationContainer} 
+                onPress={() => navigation.navigate('EmailScreenPage')}
+                >
                     <Image
                     source={require('../../assets/assets/go.png')}
                     style={styles.imageStyle}
@@ -125,7 +131,11 @@ export default function App() {
                   placeholder="9621339000"
                   underlineColorAndroid="transparent"
                 />
-                <TouchableOpacity>
+                <TouchableOpacity
+                activeOpacity={0.7}
+                style={styles.NavigationContainer} 
+                onPress={() => navigation.navigate('PhoneNumberPage')}
+                >
                     <Image
                     source={require('../../assets/assets/go.png')}
                     style={styles.imageStyle}
@@ -145,7 +155,11 @@ export default function App() {
                   underlineColorAndroid="transparent"
                   secureTextEntry={true}
                 />
-                <TouchableOpacity>
+                <TouchableOpacity
+                 activeOpacity={0.7}
+                 style={styles.NavigationContainer} 
+                 onPress={() => navigation.navigate('ChangePasswordPage')}
+                >
                     <Image
                     source={require('../../assets/assets/go.png')}
                     style={styles.imageStyle}
