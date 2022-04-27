@@ -1,4 +1,4 @@
-import React from 'react';
+import Icon from 'react-native-vector-icons/Ionicons';
 import {
   View, Text, StyleSheet
 } from 'react-native';
@@ -22,9 +22,11 @@ function App({navigation}) {
           name="ProfileHomePage"
           component={FuncProfilePage}
           options={{ 
-            title: 'Profile',
+            title: 'My Profile',
             headerStyle: {
-              backgroundColor: '#1D4123'
+              backgroundColor: '#1D4123',
+              elevation: 0,
+              shadowOpacity: 0
             },
             headerTintColor: 'white',
             headerTitleStyle: {

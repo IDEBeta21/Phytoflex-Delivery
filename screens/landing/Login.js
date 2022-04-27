@@ -8,6 +8,7 @@ import {
 // import React, { Component } from 'react'
 import * as React from 'react';
 import {useState , useEffect}from 'react';
+import { StatusBar } from 'expo-status-bar';
 
 import firebase from 'firebase';
 
@@ -66,6 +67,7 @@ export default function Login ({navigation}) {
         source={require('./../../assets/assets/drawerIcons/loginBG.png')} 
         resizeMode= 'stretch' 
         style={styles.loginContainer}>
+        <StatusBar style="auto" />
             
             <View style={(keyboardStatus == false ? styles.loginView : styles.loginViewKeyUp)}> 
                 {/* Text Input Area */}
@@ -77,10 +79,10 @@ export default function Login ({navigation}) {
                 </Pressable>
                 
 
-                <Text style={styles.label}>YOUR EMAIL</Text>
+                <Text style={styles.label}>USERNAME</Text>
                 <TextInput
                     style={styles.textbox}
-                    placeholder="i.e. pythoflex@gmail.com"
+                    placeholder="Employee ID"
                     onChangeText = {(text) => setuserEmail(text)}
                     value={userEmail}
                 ></TextInput>
@@ -93,14 +95,6 @@ export default function Login ({navigation}) {
                     value={userPass}
                     secureTextEntry={true}
                 ></TextInput>
-
-
-
-                <TouchableOpacity>
-                    <View style={{color: 'white', justifyContent: 'center', alignItems: 'flex-end', marginBottom: 10, marginEnd: 11}}>
-                        <Text style={{color: 'white', fontFamily: 'poppins-light', fontSize: 12}}>Forgot Password?</Text>
-                    </View>
-                </TouchableOpacity>
 
                 <TouchableOpacity 
                     onPress={() => logInClick()}>
@@ -137,24 +131,24 @@ const styles = StyleSheet.create({
         height: Dimensions.get('window').height,
     },
     loginView: {
-        // backgroundColor: '#040',
+        // backgroundColor: '#1D4123',
         paddingHorizontal: 30, 
         paddingTop: 0, 
         // borderTopLeftRadius: 35, 
         // borderTopRightRadius: 35,
         flex: 1,
         justifyContent: 'flex-end',
-        paddingBottom: 100
+        paddingBottom: 75
     },
     loginViewKeyUp: {
-        backgroundColor: '#040',
+        backgroundColor: '#1D4123',
         paddingHorizontal: 30, 
         paddingTop: 0, 
         // borderTopLeftRadius: 35, 
         // borderTopRightRadius: 35,
         flex: 1,
         justifyContent: 'flex-end',
-        paddingBottom: 50
+        paddingBottom: 80
     },
     container: {
         flex: 1,
@@ -169,7 +163,7 @@ const styles = StyleSheet.create({
         paddingVertical: 25,
     },
     headerText: {
-        fontSize: 24,
+        fontSize: 20,
         color: 'white',
         alignItems: 'center',
         justifyContent: 'center',
