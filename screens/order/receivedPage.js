@@ -76,7 +76,8 @@ export default function ReceivedPage({navigation, route}) {
                         </TouchableOpacity></View>
                       </View>
                     <View style={{flex:1, paddingLeft: 5}}>
-                      <PFSecondaryButton title={'Delivered'} roundness={7}/>
+                      <PFSecondaryButton title={'Delivered'} roundness={7} 
+                      onPress={() => navigation.navigate('ProofOfDelivery')}/>
                     </View>
                   </View>
                 </View>

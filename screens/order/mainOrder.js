@@ -12,6 +12,9 @@ import NewOrderPage from './NewOrderScanner'
 import PickUpOrdersPage from './pickUpOrders'
 import PickUpPage from './pickUpPage'
 import FailedOrderReport from './makeAReport'
+import TakePhoto from './takePhoto'
+import ProofOfDelivery from './proofOfDelivery'
+
 
 function FuncOrderPage({route, navigation}) {
   return (
@@ -40,6 +43,18 @@ function FuncPickUpHomePage({route, navigation}) {
 function FuncFailedOrderReportPage({route, navigation}) {
   return (
     <FailedOrderReport navigation={navigation} route = {route}/>
+  );
+}
+
+function FuncTakePhoto({navigation}) {
+  return (
+    <TakePhoto navigation={navigation}/>
+  );
+}
+
+function FuncProofOfDelivery({navigation}) {
+  return (
+    <ProofOfDelivery navigation={navigation}/>
   );
 }
 
@@ -133,6 +148,43 @@ function App({navigation}) {
             }
           }}
         />
+
+      <Stack.Screen
+          name="TakePhoto"
+          component={FuncTakePhoto}
+          options={{ 
+            title: 'Take a Photo',
+            headerStyle: {
+              backgroundColor: '#1D4123',
+              elevation: 0,
+              shadowOpacity: 0
+            },
+            headerTintColor: 'white',
+            headerTitleStyle: {
+              fontFamily: 'poppins-semiBold',
+              fontSize: 18,
+            }
+          }}
+        />
+
+      <Stack.Screen
+          name="ProofOfDelivery"
+          component={FuncProofOfDelivery}
+          options={{ 
+            title: 'Proof of Delivery',
+            headerStyle: {
+              backgroundColor: '#1D4123',
+              elevation: 0,
+              shadowOpacity: 0
+            },
+            headerTintColor: 'white',
+            headerTitleStyle: {
+              fontFamily: 'poppins-semiBold',
+              fontSize: 18,
+            }
+          }}
+        />
+
 
       </Stack.Navigator>
   );
