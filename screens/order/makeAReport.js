@@ -3,8 +3,9 @@ import {
   View, Text, StyleSheet, TextInput, TouchableOpacity, Image, ScrollView
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
+import { RadioButton} from 'react-native-paper';
 
-import { RadioButton, Input } from 'react-native-paper';
+import RadioButtonRN from 'radio-buttons-react-native';
 
 import { 
   PFPrimaryButton, PFSecondaryButton, 
@@ -23,36 +24,22 @@ let failedOrders = [
 ]
 
 export default function FailedOrderReport({navigation, route}) {
-    const [unreachable, setOption1] = useState(false);
-    const [refused, setOption2] = useState(false);
-    const [cannotFound, setOption3] = useState(false);
-    const [other, setOption4] = useState(false);
-
-    const Option1 = () =>{
-      setOption1(true);
-      setOption2(false);
-      setOption3(false);
-      setOption4(false);
-    }
-    
-    const Option2 = () =>{
-      setOption1(false);
-      setOption2(true);
-      setOption3(false);
-      setOption4(false);
-    }
-    const Option3 = () =>{
-      setOption1(false);
-      setOption2(false);
-      setOption3(true);
-      setOption4(false);
-    }
-    const Option4 = () =>{
-      setOption1(false);
-      setOption2(false);
-      setOption3(false);
-      setOption4(true);
-    }
+  const [value, setValue] = React.useState('rent');
+  const [otherPayment,setOtherPayment] = React.useState('');
+    const data = [
+      {
+        label: 'Buyer is unreachable'
+       },
+       {
+        label: 'Receiver refused the delivery'
+       },
+       {
+        label: 'Delivery address cannot be found'
+       },
+       {
+        label: 'Other'
+       }
+      ];
 
     return (
       <View style={styles.container}>
@@ -78,41 +65,36 @@ export default function FailedOrderReport({navigation, route}) {
               <PFText size={14}>{item.contactNumber}</PFText>
             </View>
 
-            <View style={{flexDirection: 'column', marginBottom: 20}}>
+            <View style={{flexDirection: 'column', marginBottom: 25}}>
               <PFText size={14}>Address: </PFText>
               <PFText size={14}>{item.deliveryAddress}</PFText>
             </View>
 
             <View style={{flexDirection: 'column'}}>
               <PFText size={16} weight={'semi-bold'}>Reason: </PFText>
-              <RadioButton
-                title="Buyer is unreachable"
-                checked={unreachable}
-                checkedIcon="dot-circle-o"
-                uncheckedicon="circle-o"
-                onPress={Option1}
-              />
-              <RadioButton
-                title="Receiver refused the delivery"
-                checked={refused}
-                checkedIcon="dot-circle-o"
-                uncheckedicon="circle-o"
-                onPress={Option2}
-              />
-              <RadioButton
-                title="Delivery address cannot be found"
-                checked={cannotFound}
-                checkedIcon="dot-circle-o"
-                uncheckedicon="circle-o"
-                onPress={Option3}
-              />
-              <RadioButton
-                title="Other: "
-                checked={other}
-                checkedIcon="dot-circle-o"
-                uncheckedicon="circle-o"
-                onPress={Option4}
-              />
+                <RadioButtonRN
+                 data={data}
+                  selectedBtn={(e) => console.log(e)}
+                  activeColor={'#1D4123'}
+                  box={false}
+                  textColor={'#1D4123'}
+                  textStyle={{fontFamily: 'poppins-light'}}
+                />
+                
+                <TextInput
+                  placeholder='Other Reason'
+                />
+                 <RadioButton.Group onValueChange={newValue => setValue(newValue)} value={value}>
+                  <View style={{flexDirection:'row',alignItems:"center"}}>
+                    <RadioButton value="rent" />
+                    <Text>Rent</Text>
+                  </View>
+                  <View style={{flexDirection:'row',alignItems:"center"}}>
+                    <RadioButton value="other" />
+                    <Text>Others</Text>
+                  </View>
+                </RadioButton.Group>
+             {value === 'other' && <TextInput placeholder="Other Payment method" onChangeText={text=> setOtherPayment(text)}/>}
             </View>
 
             <View style={{marginTop: 55}}>
@@ -152,5 +134,8 @@ export default function FailedOrderReport({navigation, route}) {
     },
     scanBoxContainer: {
       borderWidth: 1
+    },
+    rdbtnFont: {
+      fontFamily: 'Poppins'
     }
   });
