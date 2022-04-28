@@ -1,10 +1,12 @@
-import React from 'react';
+import React,  { Component, useState, useEffect } from 'react';
 import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 
 import {PFPrimaryButton, PFSecondaryButton, PFText, PFFlatList} from '../../components'
 
 import Colors from '../../utils/globalColors';
+import firebase from 'firebase'
+
 
 let historyOrders = [
     {
@@ -40,7 +42,57 @@ let historyOrders = [
   ]
 export default function App() {
 
+  const [refdata, setrefdata] = useState([]); // declaration
+  const [refnull, setrefnull] = useState(true);
+ 
+  let setColor = 'blue'; 
+
+        
+   
+        if(firebase.firestore().collection('Orders').where('orderStatus', '==', 'Delivered')){
+          setColor = 'green';
+       }else{
+        if(firebase.firestore().collection('Orders').where('orderStatus', '==', 'Failed')){
+          setColor = 'red';
+        }
+     
+      }
+        //if(firebase.firestore().collection('Orders').where('orderStatus', '==', 'Failed').get()){
+          //setColor =  'red';
+      //}
+    
+    
+
+  
+    const getData = async() => {
+
+      // Get data inside document
+      firebase.firestore()
+      .collection('Orders').get().then((res) => {
+        
+        let comment = res.docs.map(doc => { 
+          const data = doc.data();
+          const id = doc.id;
+          return {id, ...data}
+        })
+        setrefdata(comment);
+        console.log(refdata);
+        setrefnull(false);
+      }).catch((err) => {
+        Alert.alert(err)
+      })
+      
+    }
+
+    useEffect(() => {
+
+      getData();
+    
+  }, [])
+
+
   return (
+    
     <View style={styles.container}>
     <View>
       
@@ -51,8 +103,9 @@ export default function App() {
             
             <PFFlatList
               noDataMessage='No Orders'
-              data={historyOrders}
+              data={refdata}
               renderItem={(item) => (
+               
               <View style={{borderColor: Colors.primary, borderWidth: 1, borderRadius: 5, marginBottom: 10, marginTop: 10, padding: 10,  width: 330  }}>
                 <View style={{marginBottom: 10}}>
                   <View style={{flex: 6}}>
@@ -72,7 +125,9 @@ export default function App() {
                   
                     <View style={{flexDirection: 'row', flex: 6}}>
                       <PFText>Status: </PFText>
-                      <PFText color={'firebrick'}>{item.status}</PFText>
+                      <PFText color= {setColor}>{item.orderStatus}</PFText>
+
+                      
                     </View>
                  
                   <PFText>Reason: {item.reason}</PFText> 
