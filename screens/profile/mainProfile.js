@@ -36,6 +36,7 @@ function FuncChangePasswordPage({navigation}) {
   );
 }
 
+
 function App({navigation}) {
   return (
       <Stack.Navigator>
@@ -110,6 +111,7 @@ function App({navigation}) {
             }
           }}
         />
+
 
       </Stack.Navigator>
   );

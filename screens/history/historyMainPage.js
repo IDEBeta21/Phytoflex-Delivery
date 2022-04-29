@@ -46,13 +46,12 @@ export default function App() {
   const [refnull, setrefnull] = useState(true);
  
   let setColor = 'blue'; 
-
-        
+  
    
         if(firebase.firestore().collection('Orders').where('orderStatus', '==', 'Delivered')){
           setColor = 'green';
        }else{
-        if(firebase.firestore().collection('Orders').where('orderStatus', '==', 'Failed')){
+           if(firebase.firestore().collection('Orders').where('orderStatus', '==', 'Failed')){
           setColor = 'red';
         }
      
@@ -98,7 +97,7 @@ export default function App() {
       
       <ScrollView style={{marginTop: 5}} showsVerticalScrollIndicator={false}>
         <View style={{paddingVertical: 225, paddingLeft: 5, paddingTop: 5}}>
-          {/*<View style={{paddingVertical: 5, paddingLeft: 10}}>*/}
+          <View style={{paddingVertical: 5, paddingRight: 5}}>
             <PFText size={18} weight={'semi-bold'}>Yesterday</PFText>
             
             <PFFlatList
@@ -136,7 +135,7 @@ export default function App() {
                 )}
                keyExtractor={(item,index) => index}
               />
-            {/*</View> */}
+            </View>
           </View>
         </ScrollView>
       </View>
