@@ -14,6 +14,8 @@ import {
 
 import Colors from '../../utils/globalColors';
 
+// import firebase
+import firebase from 'firebase';
 let failedOrders = [
     {
       orderId: "2110250003",
@@ -24,6 +26,33 @@ let failedOrders = [
 ]
 
 export default function FailedOrderReport({navigation, route}) {
+
+  const [newcomment, setnewcomment] = useState('')
+  function addData(){
+          firebase.firestore().collection('Comment').add({
+            Comment: newcomment,
+            Date: '2022-02-22',
+            PostId: 'Postid',
+            UserId: 'userid'
+          }).then(() => {
+            alert("Document Created!")
+          }).catch((err) => {
+            alert(err)
+          })
+        }
+      // const Create = ()=>{
+      //   const myDoc = doc(db, "MyCollection", "MyDocument")
+      // }
+      // const Read = ()=>{
+        
+      // }
+      // const Update = ()=>{
+        
+      // }
+      // const Delete = ()=>{
+        
+      // }
+
   const [value, setValue] = React.useState('rent');
   const [otherPayment,setOtherPayment] = React.useState('');
     const data = [
@@ -48,6 +77,10 @@ export default function FailedOrderReport({navigation, route}) {
           data={failedOrders}
           renderItem={(item) => (
           <View>
+            <TextInput
+                  placeholder='Other Reason'
+                  onChangeText={(val) => setnewcomment(val)}
+                />
             <View style={{marginBottom: 20}}>
               <View style={{flexDirection: 'row', flex: 6}}>
               <PFText size={14}>Order ID:   </PFText>
@@ -98,7 +131,7 @@ export default function FailedOrderReport({navigation, route}) {
             </View>
 
             <View style={{marginTop: 55}}>
-            <PFSecondaryButton title={'Submit Report'} roundness={7}/>
+            <PFSecondaryButton title={'Submit Report'} roundness={7} onPress={addData}/>
             </View>
           </View>
           )}
