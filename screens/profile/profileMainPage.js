@@ -1,12 +1,12 @@
 import React from 'react';
 import {
-  View, Text, StyleSheet, ScrollView, TextInput, Image, TouchableOpacity, Pressable
+  View, Text, StyleSheet, ScrollView, TextInput, Image, TouchableOpacity, Pressable, Button
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 
-
 export default function App({navigation}) {
+
   return (
     <View>
       <StatusBar style="auto" />
