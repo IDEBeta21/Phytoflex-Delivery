@@ -4,17 +4,67 @@ import {
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
+import Animated from 'react-native-reanimated';
+import BottomSheet from 'reanimated-bottom-sheet';
 
 export default function App({navigation}) {
+
+  const renderContent = () => (
+    <View
+      style={{
+        //backgroundColor: '#f5f5f5',
+        backgroundColor: '#1D4123',
+        padding: 16,
+        height: 270,
+      }}
+    >
+      <Image
+          source={require('../../assets/assets/drawerIcons/line.png')}
+          style={{ width:'20%', height:6, borderRadius: 32, alignSelf: 'center'}}>
+      </Image>
+      <Text style={{
+          color: 'white', 
+          fontFamily: 'poppins-semiBold', 
+          fontSize: 18,
+          marginTop: 10,
+          marginBottom: 4,
+          textAlign: 'center', }}>
+          Choose your Profile Picture
+      </Text>
+      <TouchableOpacity>
+            <View style={styles.btnBtmSheet}>
+                <Text style={{ color: 'white', fontSize: 18, fontFamily: 'poppins-regular'}}>Take Photo</Text>
+            </View>
+      </TouchableOpacity>
+      <TouchableOpacity>
+            <View style={styles.btnBtmSheet}>
+                <Text style={{ color: 'white', fontSize: 18, fontFamily: 'poppins-regular'}}>Choose from Library</Text>
+            </View>
+      </TouchableOpacity>
+       <TouchableOpacity onPress={() => sheetRef.current.snapTo(1)}>
+            <View style={styles.btnBtmSheetCancel}>
+                <Text style={{ color: 'white', fontSize: 18, fontFamily: 'poppins-regular'}}>Cancel</Text>
+            </View>
+      </TouchableOpacity>      
+    </View>
+  );
+  
+  const sheetRef = React.useRef(null);
 
   return (
     <View>
       <StatusBar style="auto" />
+      <BottomSheet
+        ref={sheetRef}
+        snapPoints={[270, 0, 0]}
+        borderRadius={30}
+        renderContent={renderContent}
+      />
       <ScrollView>
           <View style ={{width: '100%', backgroundColor: '#1D4123', height: 240}}>
                 <View style={styles.container}>
                   <View style={styles.item}>
-                      <TouchableOpacity>
+                      <TouchableOpacity onPress={() => sheetRef.current.snapTo(0)}>
                             <Image
                                 source={require('../../assets/assets/sampleProfile.jpg')}
                                 style={{ width:160, height:205, borderRadius:15}}>
@@ -244,6 +294,52 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         
         backgroundColor: '#639D04',
+        borderRadius: 40,
+        
+        alignItems: 'center', 
+        justifyContent: 'center',
+        
+        shadowColor: "black",
+        shadowOffset: {
+            width: 0,
+            height: 5,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 1,
+        elevation: 5,
+
+    },
+  btnBtmSheet: {
+        marginTop: 8,
+        padding: 10,
+        marginStart: 20,
+        marginEnd: 20,
+        marginBottom: 8,
+        
+        backgroundColor: '#639D04',
+        borderRadius: 40,
+        
+        alignItems: 'center', 
+        justifyContent: 'center',
+        
+        shadowColor: "black",
+        shadowOffset: {
+            width: 0,
+            height: 5,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 1,
+        elevation: 5,
+
+    },
+  btnBtmSheetCancel: {
+        marginTop: 8,
+        padding: 10,
+        marginStart: 20,
+        marginEnd: 20,
+        marginBottom: 8,
+        
+        backgroundColor: '#8E1B1B',
         borderRadius: 40,
         
         alignItems: 'center', 

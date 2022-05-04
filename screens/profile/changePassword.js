@@ -135,5 +135,5 @@ const styles = StyleSheet.create({
     color: '#1D4123', 
     fontFamily: 'poppins-light', 
     fontSize: 13,
-  }
+  },
 })
