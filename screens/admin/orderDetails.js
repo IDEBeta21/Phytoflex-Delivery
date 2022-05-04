@@ -22,11 +22,11 @@ export default function OrderDetails({navigation, route}) {
     <ScrollView style={{paddingHorizontal: 10, paddingTop: 10, paddingBottom: 20}} showsHorizontalScrollIndicator={false} >
       <View style={{flexDirection: 'row', paddingBottom: 20}}>
         <View style={{flex: 1, flexDirection: 'row'}}>
-          <PFText size={16} weight={'medium'} >Order ID: </PFText>
-          <PFText size={16} weight={'semi-bold'} style={{marginLeft: 10}} >{route.params.orderId}</PFText>
+          {/* <PFText size={16} weight={'medium'} >Order ID: </PFText>
+          <PFText size={16} weight={'semi-bold'} style={{marginLeft: 10}} >{route.params.orderId}</PFText> */}
         </View>
         <View style={{alignItems: 'flex-end', flex: 1}}>
-          <PFText>{route.params.orderDate}</PFText>
+          {/* <PFText>{route.params.orderDate}</PFText> */}
         </View>
       </View>
 

@@ -59,6 +59,7 @@ function MainAdmin({navigation}) {
               fontFamily: 'poppins-semiBold',
               fontSize: 18,
             },
+            // headerLeft: null
           }}
         />
 
