@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Text, View, TouchableOpacity, ImageBackground } from "react-native";
 import { Camera } from "expo-camera";
 import firebase from "firebase";
+import { doc, setDoc, updateDoc } from "firebase/firestore"; 
+
 
 export default function TakePhoto({navigation}) {
 
@@ -12,7 +14,7 @@ export default function TakePhoto({navigation}) {
 
   useEffect(() => {
     (async () => {
-      const { status } = await Camera.requestPermissionsAsync();
+      const { status } = await Camera.requestCameraPermissionsAsync();
       setHasPermission(status === "granted");
     })();
   }, []);
@@ -48,15 +50,28 @@ export default function TakePhoto({navigation}) {
       xhr.send(null);
     });
 
-    
-    await firebase.storage().ref().child('delivery/img/proofOfDelivery' + new Date().toString() + '.jpg').put(blob)
+    let imageDirectory = 'delivery/img/proofOfDelivery' + new Date().toString() + '.jpg';
+
+    await firebase.storage().ref().child(imageDirectory).put(blob)
     .then((res) => {
       console.log(res);
     })
+
+    // To update imageURL:
+    await firebase.firestore().collection("Orders").doc("TV0ZFe6Oh8BOzYCcHPaD").update({
+      "imageURL": imageDirectory,
+      "orderStatus": 'Delivered'
+
+    })
+    .then(() => {
+        console.log("Document successfully updated!");
+    });
+
     
     blob.close();
   }
-    
+
+   
     return(
 
       <View style={{ flex: 1 }}>

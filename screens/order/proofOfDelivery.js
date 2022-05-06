@@ -4,7 +4,7 @@ import { Camera } from "expo-camera";
 import firebase from "firebase";
 import { FAB } from 'react-native-paper';
 
-export default function proofOfDelivery({navigation}) {
+export default function ProofOfDelivery({navigation}) {
     return(
 
       <View style={{ flex: 1 }}>
