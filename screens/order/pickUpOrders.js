@@ -30,7 +30,7 @@ export default function PickUpOrderPage({navigation, route}) {
     const [refnull2, setrefnull2] = useState(true);
   
     const updateData = async() => {
-      navigation.navigate('PickUpPage')
+      navigation.navigate('PickUpPage');
       // Get data inside document
       firebase.firestore()
       .collection('Orders').where('orderId', '==', route.params.data).get().then((res) => {
