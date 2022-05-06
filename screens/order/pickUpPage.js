@@ -1,4 +1,4 @@
-import React from 'react';
+import React,  { Component, useState, useEffect } from 'react';
 import {
   View, Text, StyleSheet, TouchableOpacity, Image, ScrollView
 } from 'react-native';
@@ -8,9 +8,8 @@ import {
   PFText,
   PFFlatList
 } from '../../components'
-
-  
 import Colors from '../../utils/globalColors';
+import firebase from 'firebase'
 
 let pickUpOrders = [
   {
@@ -22,7 +21,50 @@ let pickUpOrders = [
 ]
 
 
+
+
+
+
 export default function PickUpPage({navigation, route}) {
+
+  const today = new Date();
+today.setHours(0);
+today.setMinutes(0);
+today.setMilliseconds(0);
+today.setSeconds(0);
+
+const [refdata, setrefdata] = useState([]); // declaration
+const [refnull, setrefnull] = useState(true);
+
+
+
+
+
+  const getData = async() => {
+
+    // Get data inside document
+    firebase.firestore()
+    .collection('Orders').where("date", ">=", today).get().then((res) => {
+      let comment = res.docs.map(doc => { 
+        const data = doc.data();
+        const id = doc.id;
+        return {id, ...data}
+      })
+      setrefdata(comment);
+      console.log(refdata);
+      setrefnull(false);
+    }).catch((err) => {
+      Alert.alert(err)
+    })
+    
+  }
+
+  useEffect(() => {
+
+    getData();
+  
+}, [])
+
 
   return (
     <View style={styles.container}>
@@ -53,7 +95,7 @@ export default function PickUpPage({navigation, route}) {
         <PFText size={18} weight={'semi-bold'}>Today</PFText>
           <PFFlatList
             noDataMessage='No Orders'
-            data={pickUpOrders}
+            data={refdata}
             renderItem={(item) => (
               <View style={{borderColor: Colors.primary, borderWidth: 1, borderRadius: 5, marginBottom: 10, padding: 15,  width: 330  }}>
                 <View style={{flexDirection: 'row', marginBottom: 10}}>

@@ -26,8 +26,36 @@ export default function PickUpOrderPage({navigation, route}) {
 
     const [refdata, setrefdata] = useState([]); // declaration
     const [refnull, setrefnull] = useState(true);
+    const [refdata2, setrefdata2] = useState([]); // declaration
+    const [refnull2, setrefnull2] = useState(true);
   
-    
+    const updateData = async() => {
+      navigation.navigate('PickUpPage')
+      // Get data inside document
+      firebase.firestore()
+      .collection('Orders').where('orderId', '==', route.params.data).get().then((res) => {
+        res.forEach(doc => {
+          console.log(doc.id, '=>', doc.data());
+          const docRef = firebase.firestore().collection('Orders').doc(doc.id);
+              // update ResultMatched
+                      docRef.update({
+                ResultMacthed: "True"
+              })
+        })
+      
+        let comment = res.docs.map(doc => { 
+          const data = doc.data();
+          const id = doc.id;
+          return {id, ...data}
+        })
+        setrefdata2(comment);
+        console.log(refdata2);
+        setrefnull2(false);
+      }).catch((err) => {
+        Alert.alert(err)
+      })
+      
+    }
   
   
   
@@ -36,6 +64,8 @@ export default function PickUpOrderPage({navigation, route}) {
         // Get data inside document
         firebase.firestore()
         .collection('Orders').where('orderId', '==', route.params.data).get().then((res) => {
+
+        
           let comment = res.docs.map(doc => { 
             const data = doc.data();
             const id = doc.id;
@@ -51,6 +81,8 @@ export default function PickUpOrderPage({navigation, route}) {
       }
 
       useEffect(() => {
+
+       
 
         getData();
       
@@ -90,9 +122,7 @@ export default function PickUpOrderPage({navigation, route}) {
                 <PFText>Delivery Address:</PFText>
                 <PFText>{item.deliveryAddress}</PFText>
                 <View style={{flex:1, paddingTop: 10}}>
-                    <PFSecondaryButton title={'Result Matched'} roundness={7} onPress={() => navigation.navigate('PickUpPage', {
-        orderId: item.orderId  
-      })} />
+                    <PFSecondaryButton title={'Result Matched'} roundness={7} onPress={() => updateData()} />
                   </View>
                   <View style={{flex:1, paddingTop: 10}}>
                     <View style={{flex: 1, borderColor: Colors.primary, borderWidth: 1, borderRadius: 7, alignItems: 'center', justifyContent: 'center', padding: 4, width: 318}}>
