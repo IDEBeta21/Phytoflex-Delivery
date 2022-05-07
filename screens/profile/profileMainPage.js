@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React,  { Component, useState, useEffect } from 'react';
 import {
   View, Text, StyleSheet, ScrollView, TextInput, Image, TouchableOpacity, Pressable, Button, Alert, Modal
 } from 'react-native';
@@ -8,11 +8,15 @@ import Animated from 'react-native-reanimated';
 import BottomSheet from 'reanimated-bottom-sheet';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import RadioButton from './RadioButton';
+import firebase from 'firebase';
 
 export default function App({navigation}) {
  const [modalVisible, setModalVisible] = useState(false);
 
  const [option, setOption] = useState(null);
+
+
+ let userId = window.userId
 
    const data = [
     { value: 'Female' },
@@ -91,6 +95,55 @@ export default function App({navigation}) {
   );
   
   const sheetRef = React.useRef(null);
+  
+  const [refdata, setrefdata] = useState([]); // declaration 
+  const [refnull, setrefnull] = useState(true);
+  
+  console.log(window.userEmail)
+  
+  const getUsers = async() => {
+
+    // Get data inside document
+    firebase.firestore()
+    .collection('EmployeeInfo').where('UserEmail', '==', window.userEmail).get().then((snapshot) => {
+      let users = snapshot.docs.map(doc => { 
+        const data2 = doc.data();
+        const id2 = doc.id;
+        return {id2, ...data2}
+      })
+      setrefdata(users);
+      console.log(refdata);
+      setrefnull(false);
+    }).catch((err) => {
+      Alert.alert(err)
+    })
+    
+  }
+
+  
+
+
+  let userfullName = "";
+  let EmployeeId = "";
+  let lName = "";
+  let empEmail = "";
+
+  refdata.forEach((item) => {
+   
+    userfullName = item.Name
+    EmployeeId = item.EmployeeID
+    empEmail = item.UserEmail
+  
+  });
+
+ 
+
+
+  useEffect(() => {
+
+    getUsers();
+  
+}, [])
 
   return (
     <View>
@@ -122,14 +175,14 @@ export default function App({navigation}) {
                                 fontFamily: 'poppins-semiBold', 
                                 fontSize: 16,
                                 marginTop: 8,}}>
-                                Juan Dela Cruz
+                                  {userfullName}
                         </Text>
                         <Text style={{
                                 color: 'white', 
                                 fontFamily: 'poppins-light', 
                                 fontSize: 12,
                                 marginTop: 0,}}>
-                                Emp ID: 101042716
+                                Emp ID: {EmployeeId}
                         </Text>
                         <Text style={{
                                 color: 'white', 
@@ -158,7 +211,7 @@ export default function App({navigation}) {
                   editable={false} 
                   selectTextOnFocus={false}
                   style={styles.textInfo}
-                  placeholder="phytoflex@gmail.com"
+                  placeholder= {empEmail}
                   underlineColorAndroid="transparent"
                 />
                 <TouchableOpacity

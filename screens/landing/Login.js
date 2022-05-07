@@ -28,7 +28,7 @@ export default function Login ({navigation}) {
             setKeyboardStatus(false);
         });
     });
-
+    window.userEmail = userEmail
     function logInClick() {
         firebase.auth().signInWithEmailAndPassword(userEmail, userPass)
             .then((result) => {
@@ -37,6 +37,8 @@ export default function Login ({navigation}) {
                 setuserEmail('');
                 setUserPass('');
                 navigation.navigate('MyTabs');
+                
+            
             })
             .catch((error) => {
                 // Alert.alert(error.message);
