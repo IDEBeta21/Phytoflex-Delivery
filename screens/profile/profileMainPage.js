@@ -109,7 +109,7 @@ export default function App({navigation}) {
       </TouchableOpacity>
       <TouchableOpacity>
             <View style={styles.btnBtmSheetSave}>
-                <Text style={{ color: '#639D04', fontSize: 18, fontFamily: 'poppins-regular'}}>Save</Text>
+                <Text style={{ color: '#639D04', fontSize: 18, fontFamily: 'poppins-regular'}}>Take A Photo</Text>
             </View>
       </TouchableOpacity>
        <TouchableOpacity onPress={() => sheetRef.current.snapTo(1)}>
@@ -151,14 +151,15 @@ export default function App({navigation}) {
 
   let userfullName = "";
   let EmployeeId = "";
-  let lName = "";
   let empEmail = "";
+  let profilePic = "";
 
   refdata.forEach((item) => {
    
     userfullName = item.Name
     EmployeeId = item.EmployeeID
     empEmail = item.UserEmail
+    profilePic = item.ProfilePicture
   
   });
 
@@ -170,6 +171,116 @@ export default function App({navigation}) {
     getUsers();
   
 }, [])
+//Take a photo
+
+
+ //choose photo from lib
+ let [selectedImage, setSelectedImage] = React.useState(null);
+
+ let openImagePickerAsync = async () => {
+   let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+   if (permissionResult.granted === false) {
+     alert('Permission to access camera roll is required!');
+     return;
+   }
+
+   let pickerResult = await ImagePicker.launchImageLibraryAsync();
+   if (pickerResult.cancelled === true) {
+     return;
+   }
+
+   setSelectedImage({ localUri: pickerResult.uri });
+   updateProfilePic(pickerResult.uri)
+   
+  };
+  const [refdata2, setrefdata2] = useState([]); // declaration
+  const [refnull2, setrefnull2] = useState(true);
+
+
+
+ async function updateProfilePic(uri){
+
+
+  const blob = await new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+      resolve(xhr.response);
+    };
+    xhr.onerror = function (e) {
+      console.log(e);
+      reject(new TypeError("Network request failed"));
+    };
+    xhr.responseType = "blob";
+    xhr.open("GET", uri, true);
+    xhr.send(null);
+  });
+
+
+  let imageDirectory = 'delivery/EmployeeProfilePic/image' + new Date().toString() + '.jpg';
+
+  await firebase.storage().ref().child(imageDirectory).put(blob)
+  .then((res) => {
+    console.log(res);
+  })
+
+  // To update imageURL:
+  await firebase.firestore().collection("EmployeeInfo").doc("zkInsGl78LYCM4COkGpF").update({
+    ProfilePicture: imageDirectory,
+    
+
+  })
+  .then(() => {
+      console.log("Document successfully updated!");
+  });
+
+  // Get data inside document
+  // firebase.firestore()
+  // .collection('EmployeeInfo').where('UserEmail', '==', window.userEmail).get().then((res) => {
+  //   res.forEach(doc => {
+  //     console.log(doc.id, '=>', doc.data());
+  //     const docRef = firebase.firestore().collection('EmployeeInfo').doc(doc.id);
+  //         // update profile picture
+  //                 docRef.update({
+  //                     ProfilePicture: selectedImage.localUri
+  //         })
+  //   })
+  
+  //   let comment = res.docs.map(doc => { 
+  //     const data = doc.data();
+  //     const id = doc.id;
+  //     return {id, ...data}
+  //   })
+  //   setrefdata2(comment);
+  //   console.log(refdata2);
+  //   setrefnull2(false);
+  // }).catch((err) => {
+  //   Alert.alert(err)
+  // })
+
+  
+  blob.close();
+  
+}
+
+//  if (selectedImage !== null) {
+//    return (
+//                  <View style={styles.item}>
+//                      <TouchableOpacity onPress={() => sheetRef.current.snapTo(0)}>
+//                            <Image
+//                                source={{ uri: selectedImage.localUri }}
+//                                style={{ width:160, height:205, borderRadius:20, resizeMode:'contain'}}>
+//                            </Image>
+//                      </TouchableOpacity>
+//                  </View>
+//    );
+//  }
+
+const [image, setimage] = useState(null)
+firebase.storage().ref().child(profilePic).getDownloadURL().then((url) => {
+  setimage(url);
+})
+
 
   return (
     <View>
@@ -186,8 +297,8 @@ export default function App({navigation}) {
                   <View style={styles.item}>
                       <TouchableOpacity onPress={() => sheetRef.current.snapTo(0)}>
                             <Image
-                                source={require('../../assets/assets/sampleProfile.jpg')}
-                                style={{ width:160, height:205, borderRadius:20, resizeMode:'contain'}}>
+                                source={{uri : image}}
+                                style={{ width:160, height:205, borderRadius:20, resizeMode:'cover'}}>
                             </Image>
                       </TouchableOpacity>
                   </View>
