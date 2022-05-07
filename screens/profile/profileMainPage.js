@@ -1,6 +1,6 @@
 import React,  { Component, useState, useEffect } from 'react';
 import {
-  View, Text, StyleSheet, ScrollView, TextInput, Image, TouchableOpacity, Pressable, Button, Alert, Modal
+  View, Text, StyleSheet, ScrollView, TextInput, Image, TouchableOpacity, Pressable, Button, Alert, Modal,
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
@@ -10,7 +10,11 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import RadioButton from './RadioButton';
 import firebase from 'firebase';
 
+import * as ImagePicker from 'expo-image-picker';
+
 export default function App({navigation}) {
+  
+  //select gender
  const [modalVisible, setModalVisible] = useState(false);
 
  const [option, setOption] = useState(null);
@@ -24,6 +28,7 @@ export default function App({navigation}) {
     { value: 'Other' },
   ];
 
+  // choose bday
   const today = new Date();
   const [date, setDate] = useState(new Date(today));
   const [mode, setMode] = useState('date');
@@ -54,36 +59,57 @@ export default function App({navigation}) {
     hideDatePicker();
   };
 
+  //bottom sheet
   const renderContent = () => (
     <View
       style={{
-        //backgroundColor: '#f5f5f5',
-        backgroundColor: '#1D4123',
-        padding: 16,
-        height: 270,
+        backgroundColor: '#f5f5f5',
+        padding: 4,
+        height: 340,
+        shadowColor: "#000000",
+        shadowOffset: {
+            width: 0,
+            height: -150,
+        },
+        shadowOpacity: 1.0,
+        shadowRadius: 40,
+        elevation: 4,
       }}
     >
       <Image
           source={require('../../assets/assets/drawerIcons/line.png')}
-          style={{ width:'20%', height:6, borderRadius: 32, alignSelf: 'center'}}>
+          style={{ width:'10%', height:6, borderRadius: 32, alignSelf: 'center', marginTop: 16, color:'#777F78' }}>
       </Image>
       <Text style={{
-          color: 'white', 
-          fontFamily: 'poppins-semiBold', 
-          fontSize: 18,
-          marginTop: 10,
-          marginBottom: 4,
+          color: '#1D4123', 
+          fontFamily: 'poppins-regular', 
+          fontSize: 25,
+          marginTop: 16,
+          textAlign: 'center',
+          }}>
+          Upload Photo
+      </Text>
+      <Text style={{
+          color: '#777F78', 
+          fontFamily: 'poppins-light', 
+          fontSize: 15,
+          marginBottom: 12,
           textAlign: 'center', }}>
           Choose your Profile Picture
       </Text>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={openImagePickerAsync}>
             <View style={styles.btnBtmSheet}>
-                <Text style={{ color: 'white', fontSize: 18, fontFamily: 'poppins-regular'}}>Take Photo</Text>
+                <Text style={{ 
+                  color: 'white', 
+                  fontSize: 18, 
+                  fontFamily: 'poppins-regular'}}>
+                  Choose from Library
+                </Text>
             </View>
       </TouchableOpacity>
       <TouchableOpacity>
-            <View style={styles.btnBtmSheet}>
-                <Text style={{ color: 'white', fontSize: 18, fontFamily: 'poppins-regular'}}>Choose from Library</Text>
+            <View style={styles.btnBtmSheetSave}>
+                <Text style={{ color: '#639D04', fontSize: 18, fontFamily: 'poppins-regular'}}>Save</Text>
             </View>
       </TouchableOpacity>
        <TouchableOpacity onPress={() => sheetRef.current.snapTo(1)}>
@@ -150,8 +176,8 @@ export default function App({navigation}) {
       <StatusBar style="auto" />
       <BottomSheet
         ref={sheetRef}
-        snapPoints={[270, 0, 0]}
-        borderRadius={30}
+        snapPoints={[340, 0, 0]}
+        borderRadius={40}
         renderContent={renderContent}
       />
       <ScrollView>
@@ -161,7 +187,7 @@ export default function App({navigation}) {
                       <TouchableOpacity onPress={() => sheetRef.current.snapTo(0)}>
                             <Image
                                 source={require('../../assets/assets/sampleProfile.jpg')}
-                                style={{ width:160, height:205, borderRadius:15}}>
+                                style={{ width:160, height:205, borderRadius:20, resizeMode:'contain'}}>
                             </Image>
                       </TouchableOpacity>
                   </View>
@@ -439,11 +465,11 @@ const styles = StyleSheet.create({
 
     },
   btnBtmSheet: {
-        marginTop: 8,
+        marginTop: 10,
         padding: 10,
-        marginStart: 20,
-        marginEnd: 20,
-        marginBottom: 8,
+        marginStart: 16,
+        marginEnd: 16,
+        marginBottom: 10,
         
         backgroundColor: '#639D04',
         borderRadius: 40,
@@ -461,12 +487,37 @@ const styles = StyleSheet.create({
         elevation: 5,
 
     },
-  btnBtmSheetCancel: {
-        marginTop: 8,
+  btnBtmSheetSave: {
+        marginTop: 10,
         padding: 10,
-        marginStart: 20,
-        marginEnd: 20,
-        marginBottom: 8,
+        marginStart: 16,
+        marginEnd: 16,
+        marginBottom: 10,
+        
+        backgroundColor: 'transparent',
+        borderRadius: 40,
+        borderColor: '#639D04',
+        borderWidth: 2,
+        
+        alignItems: 'center', 
+        justifyContent: 'center',
+        
+        shadowColor: "transparent",
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 1,
+        elevation: 5,
+
+    },
+  btnBtmSheetCancel: {
+        marginTop: 10,
+        padding: 10,
+        marginStart: 16,
+        marginEnd: 16,
+        marginBottom: 10,
         
         backgroundColor: '#8E1B1B',
         borderRadius: 40,
