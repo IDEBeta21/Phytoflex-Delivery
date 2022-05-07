@@ -148,7 +148,7 @@ export default function App({navigation}) {
 
   
 
-
+  
   let userfullName = "";
   let EmployeeId = "";
   let empEmail = "";
@@ -169,6 +169,7 @@ export default function App({navigation}) {
   useEffect(() => {
 
     getUsers();
+    updateProfilePic()
   
 }, [])
 //Take a photo
@@ -224,15 +225,29 @@ export default function App({navigation}) {
     console.log(res);
   })
 
-  // To update imageURL:
-  await firebase.firestore().collection("EmployeeInfo").doc("zkInsGl78LYCM4COkGpF").update({
-    ProfilePicture: imageDirectory,
+  // To update imageURL:  
+
+ await  firebase.firestore()
+  .collection('EmployeeInfo').where('UserEmail', '==', window.userEmail).get().then((res) => {
+    res.forEach(doc => {
+      console.log(doc.id, '=>', doc.data());
+      const docRef = firebase.firestore().collection('EmployeeInfo').doc(doc.id);
+          // update profile picture
+                  docRef.update({
+                    ProfilePicture: imageDirectory
+          })
+    })
+  })
+  
+
+  // await firebase.firestore().collection("EmployeeInfo").doc("zkInsGl78LYCM4COkGpF").update({
+  //   ProfilePicture: imageDirectory,
     
 
-  })
-  .then(() => {
-      console.log("Document successfully updated!");
-  });
+  // })
+  // .then(() => {
+  //     console.log("Document successfully updated!");
+  // });
 
   // Get data inside document
   // firebase.firestore()

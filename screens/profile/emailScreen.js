@@ -1,20 +1,83 @@
+import React,  { Component, useState, useEffect } from 'react';
 import { Text, StyleSheet, View, TextInput, TouchableOpacity } from 'react-native'
-import React from 'react'
 import { StatusBar } from 'expo-status-bar';
+import firebase from 'firebase';
+
+
 
 export default function emailScreen() {
+
+  const [refdata, setrefdata] = useState([]); // declaration 
+  const [refnull, setrefnull] = useState(true);
+
+  const [userEmail, setuserEmail] = useState(''); //user email
+
+
+  const getUsers = async() => {
+
+    // Get data inside document
+    firebase.firestore()
+    .collection('EmployeeInfo').where('UserEmail', '==', window.userEmail).get().then((snapshot) => {
+      let users = snapshot.docs.map(doc => { 
+        const data2 = doc.data();
+        const id2 = doc.id;
+        return {id2, ...data2}
+      })
+      setrefdata(users);
+      console.log(refdata);
+      setrefnull(false);
+    }).catch((err) => {
+      Alert.alert(err)
+    })
+    
+  }
+
+  function updateEmail() {
+   firebase.firestore()
+    .collection('EmployeeInfo').where('UserEmail', '==', window.userEmail).get().then((res) => {
+      res.forEach(doc => {
+        console.log(doc.id, '=>', doc.data());
+        const docRef = firebase.firestore().collection('EmployeeInfo').doc(doc.id);
+            // update profile picture
+                    docRef.update({
+                      UserEmail: userEmail
+            })
+      })
+    })
+  }
+
+  useEffect(() => {
+
+    getUsers();
+    
+  
+}, []);
+
+
+let empEmail = "";
+
+
+refdata.forEach((item) => {
+ 
+  empEmail = item.UserEmail
+ 
+
+});
   return (
       <View>
       <StatusBar style="auto" />
               <View style={styles.sectionStyle}>
                 <TextInput
                   style={styles.textInfo}
-                  placeholder="phytoflex@gmail.com"
+                  placeholder={empEmail}
                   underlineColorAndroid="#1D4123"
+                  onChangeText = {(text) => setuserEmail(text)}
+                  value={userEmail}
                 />
+
               </View>
 
-               <TouchableOpacity>
+               <TouchableOpacity onPress={() => updateEmail()}>
                     <View style={styles.buttonArea}>
                         <Text style={{ color: 'white', fontSize: 16, fontFamily: 'poppins-semiBold'}}>SAVE</Text>
                     </View>
