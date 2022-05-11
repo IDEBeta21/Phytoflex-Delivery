@@ -65,7 +65,7 @@ export default function App({navigation}) {
       style={{
         backgroundColor: '#f5f5f5',
         padding: 4,
-        height: 340,
+        height: 320,
         shadowColor: "#000000",
         shadowOffset: {
             width: 0,
@@ -92,7 +92,7 @@ export default function App({navigation}) {
       <Text style={{
           color: '#777F78', 
           fontFamily: 'poppins-light', 
-          fontSize: 15,
+          fontSize: 13,
           marginBottom: 12,
           textAlign: 'center', }}>
           Choose your Profile Picture
@@ -101,7 +101,7 @@ export default function App({navigation}) {
             <View style={styles.btnBtmSheet}>
                 <Text style={{ 
                   color: 'white', 
-                  fontSize: 18, 
+                  fontSize: 15, 
                   fontFamily: 'poppins-regular'}}>
                   Choose from Library
                 </Text>
@@ -109,12 +109,12 @@ export default function App({navigation}) {
       </TouchableOpacity>
       <TouchableOpacity>
             <View style={styles.btnBtmSheetSave}>
-                <Text style={{ color: '#639D04', fontSize: 18, fontFamily: 'poppins-regular'}}>Take A Photo</Text>
+                <Text style={{ color: '#639D04', fontSize: 15, fontFamily: 'poppins-regular'}}>Take A Photo</Text>
             </View>
       </TouchableOpacity>
        <TouchableOpacity onPress={() => sheetRef.current.snapTo(1)}>
             <View style={styles.btnBtmSheetCancel}>
-                <Text style={{ color: 'white', fontSize: 18, fontFamily: 'poppins-regular'}}>Cancel</Text>
+                <Text style={{ color: 'white', fontSize: 15, fontFamily: 'poppins-regular'}}>Cancel</Text>
             </View>
       </TouchableOpacity>      
     </View>
@@ -302,7 +302,7 @@ firebase.storage().ref().child(profilePic).getDownloadURL().then((url) => {
       <StatusBar style="auto" />
       <BottomSheet
         ref={sheetRef}
-        snapPoints={[340, 0, 0]}
+        snapPoints={[320, 0, 0]}
         borderRadius={40}
         renderContent={renderContent}
       />
@@ -593,9 +593,9 @@ const styles = StyleSheet.create({
   btnBtmSheet: {
         marginTop: 10,
         padding: 10,
-        marginStart: 16,
-        marginEnd: 16,
-        marginBottom: 10,
+        marginStart: 35,
+        marginEnd: 35,
+        marginBottom: 5,
         
         backgroundColor: '#639D04',
         borderRadius: 40,
@@ -614,11 +614,11 @@ const styles = StyleSheet.create({
 
     },
   btnBtmSheetSave: {
-        marginTop: 10,
+        marginTop: 7,
         padding: 10,
-        marginStart: 16,
-        marginEnd: 16,
-        marginBottom: 10,
+        marginStart: 35,
+        marginEnd: 35,
+        marginBottom: 5,
         
         backgroundColor: 'transparent',
         borderRadius: 40,
@@ -639,12 +639,12 @@ const styles = StyleSheet.create({
 
     },
   btnBtmSheetCancel: {
-        marginTop: 10,
+        marginTop: 7,
         padding: 10,
-        marginStart: 16,
-        marginEnd: 16,
-        marginBottom: 10,
-        
+        marginStart: 35,
+        marginEnd: 35,
+        marginBottom: 5,
+            
         backgroundColor: '#8E1B1B',
         borderRadius: 40,
         

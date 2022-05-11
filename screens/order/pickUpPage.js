@@ -68,51 +68,48 @@ const [refnull, setrefnull] = useState(true);
 
   return (
     <View style={styles.container}>
-
-        <ScrollView style={{marginTop: 15}} showsVerticalScrollIndicator={false}>
-        <View style={styles.scanContainer}> 
-       
-       <TouchableOpacity  onPress={() =>  {navigation.navigate('NewOrderPage')}}>
-           <View style={{flex: 1, alignItems: 'center',}}>
-       <Image
-             style={styles.scanBoxIcon}
-             source={require('../../assets/assets/scan.png')}
-             resizeMode='cover'
-           />
-           </View>
-       </TouchableOpacity>
-      
-       </View>
-      
-        <View style={{paddingVertical: 225, paddingLeft: 5, paddingTop: 10}}>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <View style={styles.scanContainer}> 
         
-        <View style={{paddingVertical: 5, paddingLeft: 10}}>
-        <PFText size={18} weight={'semi-bold'}>Today</PFText>
-          <PFFlatList
-            noDataMessage='No Orders'
-            data={refdata}
-            renderItem={(item) => (
-              <View style={{borderColor: Colors.primary, borderWidth: 1, borderRadius: 5, marginBottom: 10, padding: 15,  width: 330  }}>
-                <View style={{flexDirection: 'row', marginBottom: 10}}>
-                  <View style={{flex: 6}}>
-                    <PFText>Order ID: {item.orderId}</PFText>
-                  </View>
+            <TouchableOpacity  onPress={() =>  {navigation.navigate('NewOrderPage')}}>
+                <View style={{flex: 1, alignItems: 'center',}}>
+            <Image
+                  style={styles.scanBoxIcon}
+                  source={require('../../assets/assets/scan.png')}
+                  resizeMode='cover'
+                />
                 </View>
-
-                <PFText size={16} weight={'semi-bold'}>Name: {item.customerName}</PFText>
-                <PFText>Contact Number: {item.contactNumber}</PFText>
-                <PFText>Address: {item.deliveryAddress}</PFText>
-                <View style={{flex:1, paddingTop: 10, marginTop: 10}}>
-                    <PFSecondaryButton title={'Pick Order'} roundness={7}/>
+            </TouchableOpacity>
+          
+          </View>
+        
+        <View style={{marginTop: 15}}>
+          
+          <PFText size={18} weight={'semi-bold'}>Today</PFText>
+            <PFFlatList
+              noDataMessage='No Orders'
+              data={refdata}
+              renderItem={(item) => (
+                <View style={{borderColor: Colors.primary, borderWidth: 1, borderRadius: 5, marginBottom: 10, padding: 15,  width: 330  }}>
+                  <View style={{flexDirection: 'row', marginBottom: 10}}>
+                    <View style={{flex: 6}}>
+                      <PFText>Order ID: {item.orderId}</PFText>
+                    </View>
                   </View>
 
-              </View>
-            )}
-            keyExtractor={(item,index) => index}
-          />
+                  <PFText size={16} weight={'semi-bold'}>Name: {item.customerName}</PFText>
+                  <PFText>Contact Number: {item.contactNumber}</PFText>
+                  <PFText>Address: {item.deliveryAddress}</PFText>
+                  <View style={{flex:1, paddingTop: 10, marginTop: 10}}>
+                      <PFSecondaryButton title={'Pick Order'} roundness={7}/>
+                    </View>
+
+                </View>
+              )}
+              keyExtractor={(item,index) => index}
+            />
           </View>
-        </View>
-      </ScrollView>
+        </ScrollView>
     </View>
   );
 }
@@ -126,13 +123,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    padding: 15,
   },
   scanContainer:{
     flex: 1, 
     alignItems: 'center',
     borderWidth: 1,
     width: 330,
-    marginLeft: 15,
     borderRadius: 5
   },
   scanBoxIcon: {

@@ -46,9 +46,8 @@ export default function ReceivedPage({navigation, route}) {
   return (
     <View style={styles.container}>
       <View>
-        <ScrollView style={{marginTop: 15}} showsVerticalScrollIndicator={false}>
-          <View style={{paddingVertical: 225, paddingLeft: 5, paddingTop: 10}}>
-            <View style={{paddingVertical: 5, paddingLeft: 10}}>
+        <ScrollView showsVerticalScrollIndicator={false}>
+            <View>
               <PFText size={18} weight={'semi-bold'}>Today</PFText>
               <PFFlatList
                 noDataMessage='No Orders'
@@ -85,7 +84,6 @@ export default function ReceivedPage({navigation, route}) {
                keyExtractor={(item,index) => index}
               />
             </View>
-          </View>
         </ScrollView>
       </View>
     </View>
@@ -101,6 +99,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    padding: 15
   },
   scanContainer:{
     flex: 1, 

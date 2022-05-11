@@ -95,8 +95,16 @@ export default function Login ({navigation}) {
                     placeholder="Password"
                     onChangeText = {(text) => setUserPass(text)}
                     value={userPass}
-                    secureTextEntry={true}
-                ></TextInput>
+                    secureTextEntry={true}>
+                </TextInput>
+                <View style={{ flexDirection: 'row', marginTop: 2, justifyContent: 'flex-end', marginBottom: 10, marginRight: 1}}>
+                    <TouchableOpacity onPress={funcForgotPass}>
+                        <Text style={{color: 'white', fontFamily: 'poppins-light', fontSize: 12}}>Forgot Password?</Text>
+                        {/* <View style={{color: 'white', }}>
+                            <Text style={{color: '#639D04', fontFamily: 'poppins-semiBold', paddingHorizontal: 14}}>Sign Up</Text>
+                        </View> */}
+                    </TouchableOpacity>
+                </View>
 
                 <TouchableOpacity 
                     onPress={() => logInClick()}>
@@ -104,16 +112,6 @@ export default function Login ({navigation}) {
                         <Text style={{ color: 'white', fontSize: 18, fontFamily: 'poppins-semiBold'}}>LOGIN</Text>
                     </View>
                 </TouchableOpacity>
-
-                <View style={{ flexDirection: 'row', marginTop: 16, justifyContent: 'center', marginBottom: 10}}>
-                    <TouchableOpacity onPress={funcForgotPass}>
-                        <Text style={{color: 'white', fontFamily: 'poppins-light'}}>Forgot Password?</Text>
-                        {/* <View style={{color: 'white', }}>
-                            <Text style={{color: '#639D04', fontFamily: 'poppins-semiBold', paddingHorizontal: 14}}>Sign Up</Text>
-                        </View> */}
-                    </TouchableOpacity>
-                </View>
-                
             </View>
             
         {/* </KeyboardAvoidingView> */}
