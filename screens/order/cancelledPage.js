@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     flex: 1, 
     flexDirection: 'column',
     backgroundColor: '#fff',
-    alignItems: 'flex-start',
+    alignItems: 'center',
     justifyContent: 'center',
   },
   scanContainer:{

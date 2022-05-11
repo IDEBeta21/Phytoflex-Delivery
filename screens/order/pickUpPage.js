@@ -68,12 +68,7 @@ const [refnull, setrefnull] = useState(true);
 
   return (
     <View style={styles.container}>
-        
-       
-     
-      
-      <View>
-      
+
         <ScrollView style={{marginTop: 15}} showsVerticalScrollIndicator={false}>
         <View style={styles.scanContainer}> 
        
@@ -118,7 +113,6 @@ const [refnull, setrefnull] = useState(true);
           </View>
         </View>
       </ScrollView>
-        </View>
     </View>
   );
 }
@@ -130,7 +124,7 @@ const styles = StyleSheet.create({
     flex: 1, 
     flexDirection: 'column',
     backgroundColor: '#fff',
-    alignItems: 'flex-start',
+    alignItems: 'center',
     justifyContent: 'center',
   },
   scanContainer:{
