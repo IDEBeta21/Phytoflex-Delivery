@@ -74,7 +74,7 @@ export default function pendingOrders({navigation, route}) {
                   orderDate: 'April 20 2022',
                   customerName: item.customerName,
                   contactNumber: item.contactNumber,
-                  address: item.deliveryAddres
+                  address: item.deliveryAddress
                 })}>
                   <View style={{flexDirection: 'row', marginBottom: 10}}>
                     <View style={{flex: 9}}>
@@ -87,7 +87,7 @@ export default function pendingOrders({navigation, route}) {
 
                   <PFText size={16} weight={'semi-bold'}>{item.customerName}</PFText>
                   <PFText>{item.contactNumber}</PFText>
-                  <PFText>{item.deliveryAddres}</PFText>
+                  <PFText>{item.deliveryAddress}</PFText>
                 </Pressable>
 
                 <View style={{flexDirection: 'row', marginTop: 15}}>
