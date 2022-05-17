@@ -1,5 +1,5 @@
 import { Text, StyleSheet, View, ScrollView, Button, TouchableOpacity, SafeAreaView, Alert, Pressable } from 'react-native'
-import React, { Component } from 'react'
+import React, { Component, useState, useEffect } from 'react'
 
 import { 
   PFPrimaryButton, PFSecondaryButton, 
@@ -12,7 +12,39 @@ import OrderDetails from './orderDetails';
 
 import SampleData from '../../utils/SampleData'
 
+import firebase from 'firebase'
+
 export default function pendingOrders({navigation, route}) {
+
+  const [orderList, setorderList] = useState([])
+
+  useEffect(() => {
+    (async () =>{
+      await firebase.firestore()
+      .collection('Orders').get().then((snapShot) => {
+          // console.log("Document data:", doc.data());
+          // snapShot.docs.forEach((doc) => {
+          //   console.log(doc.data())
+          // })
+          let orders = snapShot.docs.map(doc => {
+            const data = doc.data();
+            const id = doc.id
+            return {id, ...data}
+          })
+          setorderList(orders)
+          console.log(orderList)
+        
+      }).catch((error) => {
+          console.log("Error getting document:", error);
+      });
+    })()
+  
+    
+  }, [])
+  
+
+  
+
     return (
       <ScrollView style={{marginTop: 15}} showsVerticalScrollIndicator={false}>
         <PFText size={18} weight={'semi-bold'}>Today</PFText>
@@ -33,28 +65,29 @@ export default function pendingOrders({navigation, route}) {
             // showsHorizontalScrollIndicator={false} 
             // showVerticalScrollIndicator={false}
             // contentContainerStyle={{ paddingRight: 12, paddingLeft: 2 }}
-            data={SampleData.myOrders}
+            // data={SampleData.myOrders}
+            data={orderList}
             renderItem={(item) => (
               <View style={{borderColor: Colors.primary, borderWidth: 1, marginBottom: 10, padding: 15, borderRadius: 7}}>
                 <Pressable onPress={() => navigation.push('OrderDetailsPage', {
-                  orderId: item.orderId,
-                  orderDate: item.date,
+                  orderId: item.id,
+                  orderDate: 'April 20 2022',
                   customerName: item.customerName,
                   contactNumber: item.contactNumber,
-                  address: item.address
+                  address: item.deliveryAddres
                 })}>
                   <View style={{flexDirection: 'row', marginBottom: 10}}>
-                    <View style={{flex: 6}}>
-                      <PFText>Order ID:{item.orderId}</PFText>
+                    <View style={{flex: 9}}>
+                      <PFText>Order ID:{item.id}</PFText>
                     </View>
-                    <View style={{flex: 6, alignItems: 'flex-end'}}>
-                      <PFText size={12}>{item.date}</PFText>
+                    <View style={{flex: 3, alignItems: 'flex-end'}}>
+                      <PFText size={12}>{'April 20 2022'}</PFText>
                     </View>
                   </View>
 
                   <PFText size={16} weight={'semi-bold'}>{item.customerName}</PFText>
                   <PFText>{item.contactNumber}</PFText>
-                  <PFText>{item.address}</PFText>
+                  <PFText>{item.deliveryAddres}</PFText>
                 </Pressable>
 
                 <View style={{flexDirection: 'row', marginTop: 15}}>

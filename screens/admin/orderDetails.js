@@ -1,9 +1,12 @@
 import { StyleSheet, Text, View, ScrollView, Image, TouchableOpacity, } from 'react-native'
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 
 import { PFText, PFFlatList, PFSecondaryButton } from '../../components'
 import Colors from '../../utils/globalColors'
 import SampleData from '../../utils/SampleData'
+
+import firebase from 'firebase'
+import { elementsThatOverlapOffsets } from 'react-native/Libraries/Lists/VirtualizeUtils'
 
 
 
@@ -13,9 +16,53 @@ export default function OrderDetails({navigation, route}) {
     orderDate,
   } = route.params
 
+  const [itemList, setitemList] = useState([])
+  const [fbImageURL, setfbImageURL] = useState('')
+
+  useEffect(() => {
+    
+    (async () => {
+      firebase.firestore()
+      .collection('Orders').doc(route.params.orderId).get().then((res) => {
+        console.log(res.data().orderedItems)
+        // res.data().forEach(element => {
+        //   console.log(element)
+        // });
+        setitemList(res.data().orderedItems)
+        console.log(itemList)
+        
+      })
+    })()
+    
+  }, [])
+
+  const getImageUrl = (url) => {
+    // let myurl = firebase.storage().ref(url).getDownloadURL().then((res) => {
+    //   // return res
+    //   // setfbImageURL(res)
+    //   return res
+    // })
+    // return myurl
+    // return myurl
+    return 'https://firebasestorage.googleapis.com/v0/b/phytoflex-3f53f.appspot.com/o/Shop%2FBanner_1.jpg?alt=media&token=85e917d3-fb19-4772-a972-2b2adbecf717'  
+  }
+
+  // async function getImageUrl(url) {
+  //   await firebase.storage().ref(url).getDownloadURL().then((res) => {
+  //     // return res
+  //     // setfbImageURL(res)
+  //     // return 'https://firebasestorage.googleapis.com/v0/b/phytoflex-3f53f.appspot.com/o/Shop%2FBanner_1.jpg?alt=media&token=85e917d3-fb19-4772-a972-2b2adbecf717'
+  //   })
+  //   // return fbImageURL
+  //   return 'https://firebasestorage.googleapis.com/v0/b/phytoflex-3f53f.appspot.com/o/Shop%2FBanner_1.jpg?alt=media&token=85e917d3-fb19-4772-a972-2b2adbecf717'
+      
+  // }
+  
+
   const [deliveryfee, setdeliveryfee] = useState(200)
 
-  const subtotal = SampleData.orderDetails.reduce((total, currentValue) => total = total + currentValue.price,0);
+  // const subtotal = SampleData.orderDetails.reduce((total, currentValue) => total = total + currentValue.price,0);
+  const subtotal = itemList.reduce((total, currentValue) => total = total + parseInt(currentValue.price),0);
   // setsubtotal(result)
 
   return (
@@ -46,11 +93,13 @@ export default function OrderDetails({navigation, route}) {
       <PFText size={18} weight={'semi-bold'} >Items</PFText>
       <View style={{borderWidth: 1, borderColor: Colors.primary, borderRadius: 5, paddingHorizontal: 12, marginBottom: 20}}>
         <PFFlatList
-          data={SampleData.orderDetails}
+          // data={SampleData.orderDetails}
+          data={itemList}
           renderItem={(item) => (
             <View style={{flexDirection: 'row', paddingVertical: 10, }}>
               <View >
-                <Image source={{uri : item.imageURL}} style={{height: 50, width: 50, borderRadius: 5}} />
+                {/* <Image source={{uri : item.imageURL}} style={{height: 50, width: 50, borderRadius: 5}} /> */}
+                <Image source={{uri : getImageUrl(item.imageURL)}} style={{height: 50, width: 50, borderRadius: 5}} />
               </View>
 
               <View style={{flex: 1, paddingLeft: 10,}}>
@@ -78,7 +127,8 @@ export default function OrderDetails({navigation, route}) {
         <View style={{flexDirection: 'row', marginBottom: 15}}>
           <View style={{flex: 9}}>
             <PFText weight='medium'>
-              Sub Total ({SampleData.orderDetails.length} items): </PFText>
+              {/* Sub Total ({SampleData.orderDetails.length} items): </PFText> */}
+              Sub Total ({itemList.length} items): </PFText>
               
             <PFText weight='medium'>
               Delivery Fee: </PFText>
