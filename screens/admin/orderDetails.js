@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, ScrollView, Image, TouchableOpacity, } from 'react-native'
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 
 import { PFText, PFFlatList, PFSecondaryButton } from '../../components'
 import Colors from '../../utils/globalColors'
@@ -8,6 +8,8 @@ import SampleData from '../../utils/SampleData'
 import firebase from 'firebase'
 import { elementsThatOverlapOffsets } from 'react-native/Libraries/Lists/VirtualizeUtils'
 
+import * as Print from 'expo-print'
+// import QRCode from 'react-native-qrcode-svg';
 
 
 export default function OrderDetails({navigation, route}) {
@@ -15,6 +17,8 @@ export default function OrderDetails({navigation, route}) {
     orderId,
     orderDate,
   } = route.params
+
+  const qrcoderf = useRef(null)
 
   const [itemList, setitemList] = useState([])
   const [fbImageURL, setfbImageURL] = useState('')
@@ -57,7 +61,50 @@ export default function OrderDetails({navigation, route}) {
   //   return 'https://firebasestorage.googleapis.com/v0/b/phytoflex-3f53f.appspot.com/o/Shop%2FBanner_1.jpg?alt=media&token=85e917d3-fb19-4772-a972-2b2adbecf717'
       
   // }
-  
+
+  // const html = `
+  //   <html>
+  //     <head>
+  //       <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+  //     </head>
+  //     <body style="text-align: center;">
+  //       <h1 style="font-size: 50px; font-family: Helvetica Neue; font-weight: normal;">
+  //         Hello Expo!
+  //       </h1>
+  //       <img
+  //         src="https://d30j33t1r58ioz.cloudfront.net/static/guides/sdk.png"
+  //         style="width: 90vw;" />
+  //     </body>
+  //   </html>
+  // `;
+
+
+  const printCode = async() => {
+    if(qrcoderf){
+      await Print.printAsync({
+        html:  `
+          <html>
+            <head>
+              <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+            </head>
+            <body style="text-align: center;">
+              <h1 style="font-size: 50px; font-family: Helvetica Neue; font-weight: normal;">
+                ` + route.params.orderId + `
+              </h1>
+              
+              <img id='qrcode' src="https://api.qrserver.com/v1/create-qr-code/?data=${route.params.orderId}&amp;size=500x500" alt="" title="HELLO" width="300" height="300" />
+            </body>
+          </html>
+        `,
+        // printerUrl: selectedPrinter?.url, // iOS only
+      }).then((res) => {
+        console.log(res)
+      }).catch((err) => {
+        console.log(err)
+      });
+    }
+    
+  }
 
   const [deliveryfee, setdeliveryfee] = useState(200)
 
@@ -153,7 +200,7 @@ export default function OrderDetails({navigation, route}) {
           </View>
         </View>
 
-        <TouchableOpacity style={{flex:1, marginBottom: 10}} onPress={() => Alert.alert('Decline')}>
+        <TouchableOpacity style={{flex:1, marginBottom: 10}} onPress={() => printCode(route.params.orderId)}>
           <View style={{
               flex: 1, borderColor: Colors.secondary, backgroundColor: Colors.secondary , 
               borderWidth: 1, borderRadius: 5, alignItems: 'center', justifyContent: 'center', padding: 7,
