@@ -38,13 +38,17 @@ const [refnull, setrefnull] = useState(true);
 
 
 
-
+  let dateNow = new Date(firebase.firestore.Timestamp.now().seconds*1000).toLocaleDateString()
+  console.log(dateNow)
 
   const getData = async() => {
 
     // Get data inside document
+    
     firebase.firestore()
-    .collection('Orders').where("date", ">=", today).get().then((res) => {
+    .collection('Orders').where("date", "==", dateNow).get().then((res) => {
+
+    
       let comment = res.docs.map(doc => { 
         const data = doc.data();
         const id = doc.id;
@@ -99,7 +103,7 @@ const [refnull, setrefnull] = useState(true);
 
                   <PFText size={16} weight={'semi-bold'}>Name: {item.customerName}</PFText>
                   <PFText>Contact Number: {item.contactNumber}</PFText>
-                  <PFText>Address: {item.deliveryAddress}</PFText>
+                  <PFText>Address: {item.deliveryAddres}</PFText>
                   <View style={{flex:1, paddingTop: 10, marginTop: 10}}>
                       <PFSecondaryButton title={'Pick Order'} roundness={7}/>
                     </View>

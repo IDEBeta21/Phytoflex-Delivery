@@ -1,4 +1,4 @@
-import React from 'react';
+import React,  { Component, useState, useEffect } from 'react';
 import {
   View, Text, StyleSheet, TouchableOpacity, Image, ScrollView
 } from 'react-native';
@@ -9,6 +9,7 @@ import {
   PFText,
   PFFlatList
 } from '../../components'
+import firebase from 'firebase'
 
   
 import Colors from '../../utils/globalColors';
@@ -43,6 +44,39 @@ let arrivedOrders = [
 
 export default function ReceivedPage({navigation, route}) {
 
+  const [refdata, setrefdata] = useState([]); // declaration
+const [refnull, setrefnull] = useState(true);
+
+
+
+  let dateNow = new Date(firebase.firestore.Timestamp.now().seconds*1000).toLocaleDateString()
+  console.log(dateNow)
+
+  const getData = async() => {
+
+    // Get data inside document
+    firebase.firestore()
+    .collection('Orders').where("orderStatNum", "==", 2).get().then((res) => {
+      let comment = res.docs.map(doc => { 
+        const data = doc.data();
+        const id = doc.id;
+        return {id, ...data}
+      })
+      setrefdata(comment);
+      console.log(refdata);
+      setrefnull(false);
+    }).catch((err) => {
+      Alert.alert(err)
+    })
+    
+  }
+
+  useEffect(() => {
+
+    getData();
+  
+}, [])
+
   return (
     <View style={styles.container}>
       <View>
@@ -51,7 +85,7 @@ export default function ReceivedPage({navigation, route}) {
               <PFText size={18} weight={'semi-bold'}>Today</PFText>
               <PFFlatList
                 noDataMessage='No Orders'
-                data={arrivedOrders}
+                data={refdata}
                 renderItem={(item) => (
                 <View style={{borderColor: Colors.primary, borderWidth: 1, borderRadius: 5, marginBottom: 10, marginTop: 10, padding: 15,  width: 330  }}>
                   <View style={{marginBottom: 10}}>
@@ -65,7 +99,7 @@ export default function ReceivedPage({navigation, route}) {
                       <PFText size={16} weight={'semi-bold'}>{item.customerName}</PFText>
                   </View>
                   <PFText>Contact Number: {item.contactNumber}</PFText>
-                  <PFText>Address: {item.deliveryAddress}</PFText>
+                  <PFText>Address: {item.deliveryAddres}</PFText>
 
                   <View style={{flexDirection: 'row', marginTop: 20}}>
                     <View style={{flex:1, paddingRight: 5}}>

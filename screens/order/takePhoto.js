@@ -27,8 +27,8 @@ export default function TakePhoto({navigation}) {
   }
 
   const takePicture = async () => {
-    if (!camera) return;
-    let photo = await camera.takePictureAsync();
+    if (!Camera) return;
+    let photo = await Camera.takePictureAsync();
     setPreviewVisible(true);
     setCapturedImage(photo); // This code should work but doesn't, it always returns null
     console.log(photo.uri);
@@ -58,7 +58,7 @@ export default function TakePhoto({navigation}) {
     })
 
     // To update imageURL:
-    await firebase.firestore().collection("Orders").doc("TV0ZFe6Oh8BOzYCcHPaD").update({
+    await firebase.firestore().collection("Orders").doc("ATqcXqNMjWteRH9djU1B").update({
       "imageURL": imageDirectory,
       "orderStatus": 'Delivered'
 
