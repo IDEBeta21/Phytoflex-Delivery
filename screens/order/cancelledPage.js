@@ -1,4 +1,4 @@
-import React from 'react';
+import React,  { Component, useState, useEffect } from 'react';
 import {
   View, Text, StyleSheet, TouchableOpacity, Image, ScrollView
 } from 'react-native';
@@ -50,6 +50,34 @@ let arrivedOrders = [
 
 
 export default function CancelledPage({navigation, route}) {
+  
+  const [refdata, setrefdata] = useState([]); // declaration
+  const [refnull, setrefnull] = useState(true);
+
+  const getData = async() => {
+    
+    // Get data inside document
+    firebase.firestore()
+    .collection('FailedOrders').where('orderId', '==', route.params.data).get().then((res) => {
+      let comment = res.docs.map(doc => { 
+        const data = doc.data();
+        const id = doc.id;
+        return {id, ...data}
+      })
+      setrefdata(comment);
+      console.log(refdata);
+      setrefnull(false);
+    }).catch((err) => {
+      Alert.alert(err)
+    })
+    
+  }
+
+  useEffect(() => {
+
+    getData();
+  
+  }, [])
 
   return (
     <View style={styles.container}>
@@ -59,12 +87,12 @@ export default function CancelledPage({navigation, route}) {
               <PFText size={18} weight={'semi-bold'}>Today</PFText>
               <PFFlatList
                 noDataMessage='No Orders'
-                data={arrivedOrders}
+                data={refdata}
                 renderItem={(item) => (
                 <View style={{borderColor: Colors.primary, borderWidth: 1, borderRadius: 5, marginBottom: 10, marginTop: 10, padding: 15,  width: 330  }}>
                   <View style={{marginBottom: 10}}>
                     <View style={{flex: 6}}>
-                      <PFText weight={'semi-bold'}>Order ID: {item.orderId}</PFText>
+                      <PFText weight={'semi-bold'}>Order ID: {item.orderID}</PFText>
                     </View>
                   </View>
 
@@ -78,7 +106,7 @@ export default function CancelledPage({navigation, route}) {
                   <View style={{marginTop: 15}}>
                     <View style={{flexDirection: 'row', flex: 6}}>
                       <PFText size={12}>Status: </PFText>
-                      <PFText size={12} color={'firebrick'}>{item.status}</PFText>
+                      <PFText size={12} color={'firebrick'}>{item.orderStatus}</PFText>
                     </View>
                   </View>
 

@@ -28,18 +28,50 @@ let failedOrders = [
 export default function FailedOrderReport({navigation, route}) {
 
   const [newcomment, setnewcomment] = useState('')
-  function addData(){
-          firebase.firestore().collection('Comment').add({
-            Comment: newcomment,
-            Date: '2022-02-22',
-            PostId: 'Postid',
-            UserId: 'userid'
-          }).then(() => {
-            alert("Document Created!")
-          }).catch((err) => {
-            alert(err)
-          })
-        }
+
+  const [refdata, setrefdata] = useState([]); // declaration
+  const [refnull, setrefnull] = useState(true);
+
+  const getData = async() => {
+    
+    // Get data inside document
+    firebase.firestore()
+    .collection('Orders').where('orderId', '==', route.params.data).get().then((res) => {
+      let comment = res.docs.map(doc => { 
+        const data = doc.data();
+        const id = doc.id;
+        return {id, ...data}
+      })
+      setrefdata(comment);
+      console.log(refdata);
+      setrefnull(false);
+    }).catch((err) => {
+      Alert.alert(err)
+    })
+    
+  }
+
+  useEffect(() => {
+
+    getData();
+  
+  }, [])
+  
+  function addFailedReports(){
+    navigation.navigate('ReceivedPage');
+    firebase.firestore().collection('FailedOrders').add({
+      orderID: orderID,
+      customerName: customerName,
+      contactNumber: contactNumber,
+      deliveryAddress: deliveryAddress,
+      orderStatus: 'Failed',
+      reason: newcomment
+    }).then((res) => {
+      Alert.alert('Submitted Successfully')
+    }).catch((err) => {
+      Alert.alert(err)
+    })  
+  }
       // const Create = ()=>{
       //   const myDoc = doc(db, "MyCollection", "MyDocument")
       // }
@@ -52,9 +84,7 @@ export default function FailedOrderReport({navigation, route}) {
       // const Delete = ()=>{
         
       // }
-
-  const [value, setValue] = React.useState('rent');
-  const [otherPayment,setOtherPayment] = React.useState('');
+      
     const data = [
       {
         label: 'Buyer is unreachable'
@@ -74,17 +104,17 @@ export default function FailedOrderReport({navigation, route}) {
       <View style={styles.container}>
         <PFFlatList
           noDataMessage='No failedOrders'
-          data={failedOrders}
+          data={refdata}
           renderItem={(item) => (
           <View>
-            <TextInput
+            {/* <TextInput
                   placeholder='Other Reason'
                   onChangeText={(val) => setnewcomment(val)}
-                />
+                /> */}
             <View style={{marginBottom: 20}}>
               <View style={{flexDirection: 'row', flex: 6}}>
               <PFText size={14}>Order ID:   </PFText>
-              <PFText size={14} weight={'semi-bold'}>{item.orderId}</PFText>
+              <PFText size={14} weight={'semi-bold'}>{item.orderID}</PFText>
               </View>
             </View>
 
@@ -107,17 +137,17 @@ export default function FailedOrderReport({navigation, route}) {
               <PFText size={16} weight={'semi-bold'}>Reason: </PFText>
                 <RadioButtonRN
                  data={data}
-                  selectedBtn={(e) => console.log(e)}
+                  selectedBtn={(e) => setnewcomment(e)}
                   activeColor={'#1D4123'}
                   box={false}
                   textColor={'#1D4123'}
                   textStyle={{fontFamily: 'poppins-light'}}
                 />
                 
-                <TextInput
+                {/* <TextInput
                   placeholder='Other Reason'
-                />
-                 <RadioButton.Group onValueChange={newValue => setValue(newValue)} value={value}>
+                /> */}
+                 {/* <RadioButton.Group onValueChange={newValue => setValue(newValue)} value={value}>
                   <View style={{flexDirection:'row',alignItems:"center"}}>
                     <RadioButton value="rent" />
                     <Text>Rent</Text>
@@ -127,11 +157,11 @@ export default function FailedOrderReport({navigation, route}) {
                     <Text>Others</Text>
                   </View>
                 </RadioButton.Group>
-             {value === 'other' && <TextInput placeholder="Other Payment method" onChangeText={text=> setOtherPayment(text)}/>}
+             {value === 'other' && <TextInput placeholder="Other Payment method" onChangeText={text=> setOtherPayment(text)}/>} */}
             </View>
 
             <View style={{marginTop: 55}}>
-            <PFSecondaryButton title={'Submit Report'} roundness={7} onPress={addData}/>
+            <PFSecondaryButton title={'Submit Report'} roundness={7} onPress={() => addFailedReports()}/>
             </View>
           </View>
           )}

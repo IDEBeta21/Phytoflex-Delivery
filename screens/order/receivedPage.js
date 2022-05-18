@@ -90,7 +90,7 @@ const [refnull, setrefnull] = useState(true);
                 <View style={{borderColor: Colors.primary, borderWidth: 1, borderRadius: 5, marginBottom: 10, marginTop: 10, padding: 15,  width: 330  }}>
                   <View style={{marginBottom: 10}}>
                     <View style={{flex: 6}}>
-                      <PFText weight={'semi-bold'}>Order ID: {item.orderId}</PFText>
+                      <PFText weight={'semi-bold'}>Order ID: {item.orderID}</PFText>
                     </View>
                   </View>
 
