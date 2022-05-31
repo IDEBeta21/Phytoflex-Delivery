@@ -43,9 +43,15 @@ let arrivedOrders = [
 
 
 export default function ReceivedPage({navigation, route}) {
+  
+  const today = new Date();
+  today.setHours(0);
+  today.setMinutes(0);
+  today.setMilliseconds(0);
+  today.setSeconds(0);
 
   const [refdata, setrefdata] = useState([]); // declaration
-const [refnull, setrefnull] = useState(true);
+  const [refnull, setrefnull] = useState(true);
 
 
 
