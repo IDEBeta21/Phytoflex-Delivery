@@ -1,8 +1,45 @@
-import { Text, StyleSheet, View, TextInput, TouchableOpacity } from 'react-native'
-import React, { Component } from 'react'
+import { Text, StyleSheet, View, TextInput, TouchableOpacity, Alert } from 'react-native'
+import React, { Component, useState } from 'react'
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable'
 
 export default function ForgotPassword ({navigation}) {
+
+    const [userEmail, setUserEmail] = useState('')
+    const [emaiValidationText, setemaiValidationText] = useState('')
+    const [emailValidationStatus, setemailValidationStatus] = useState(false)
+
+    function checkEmail(text){
+      setUserEmail(text)
+      if (text == ''){
+        return
+      }
+
+      if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(text))
+      {
+        setemaiValidationText('Valid Email Address')
+        setemailValidationStatus(true)
+        return
+      }
+      // setemaiValidationText("You have entered an invalid email address!")
+      setemaiValidationText("Please enter your email address in format. yourname@example.com")
+      setemailValidationStatus(false)
+      return
+    }
+
+    function sendResetEmail() {
+      if (emailValidationStatus){
+        firebase.auth().sendPasswordResetEmail(userEmail)
+        .then(() => {
+          Alert.alert('Password Reset Email sent')
+          // Password reset email sent!
+          // ..
+        })
+        .catch((error) => {
+          console.log(error)
+        });
+      }
+    }
+
     return (
       <View style={styles.mainContainer}>
         <Pressable onPress={() => navigation.goBack()}>
@@ -19,10 +56,10 @@ export default function ForgotPassword ({navigation}) {
         <Text style={{fontSize: 16, marginBottom: 8, fontFamily: 'poppins-regular', color: '#1D4123'}}>
             Email Address</Text>
 
-        <TextInput style={styles.emailInput} placeholder={"phytoflex@gmail.com"}>
+        <TextInput style={styles.emailInput} placeholder={"phytoflex@gmail.com"} onChangeText={(text) => checkEmail(text)}/>
+        {!userEmail == '' ? <Text style={(emailValidationStatus) ?  styles.labelCorrect : styles.labelError}>{emaiValidationText}</Text> : null}
 
-        </TextInput>
-        <TouchableOpacity style={{height: 50, justifyContent: 'center'}}>
+        <TouchableOpacity style={{height: 50, justifyContent: 'center', marginTop: 16}} onPress={() => sendResetEmail()}>
             <View style={{flex: 1, backgroundColor: '#639d04', alignItems: 'center', justifyContent: 'center', borderRadius: 25,  }}>
                 <Text style={{color: 'white', fontSize: 18, fontFamily: 'poppins-light', textAlign:'center'}}>
                     SEND ME NOW</Text>
@@ -55,7 +92,21 @@ const styles = StyleSheet.create({
         borderColor: '#1D4123',
         paddingVertical: 8,
         paddingHorizontal: 12,
-        marginBottom: 16,
+        marginBottom: 0,
         fontFamily: 'poppins-light'
+    },
+    labelError:{
+        color: 'red',
+        marginTop:6,
+        paddingStart: 8,
+        fontSize: 12,
+        fontFamily: 'poppins-semiBold'
+    },
+    labelCorrect:{
+        color: '#639d04',
+        marginTop:6,
+        paddingStart: 8,
+        fontSize: 12,
+        fontFamily: 'poppins-semiBold'
     }
 })
