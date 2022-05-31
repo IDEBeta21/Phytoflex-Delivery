@@ -48,7 +48,7 @@ export default function pendingOrders({navigation, route}) {
     return (
       <ScrollView style={{marginTop: 15}} showsVerticalScrollIndicator={false}>
         <PFText size={18} weight={'semi-bold'}>Today</PFText>
-        <View style={{flexDirection: 'row', }}>
+        <View style={{flexDirection: 'row', marginBottom: 10}}>
         {/* <View> */}
             <View style={{flex: 6}}>
                 <PFText>Cut-Off time:</PFText>
@@ -78,7 +78,7 @@ export default function pendingOrders({navigation, route}) {
                 })}>
                   <View style={{flexDirection: 'row', marginBottom: 10}}>
                     <View style={{flex: 9}}>
-                      <PFText>Order ID:{item.id}</PFText>
+                      <PFText>Order ID: {item.id}</PFText>
                     </View>
                     <View style={{flex: 3, alignItems: 'flex-end'}}>
                       <PFText size={12}>{'April 20 2022'}</PFText>

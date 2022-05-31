@@ -161,7 +161,7 @@ export default function FailedOrderReport({navigation, route}) {
             </View>
 
             <View style={{marginTop: 55}}>
-            <PFSecondaryButton title={'Submit Report'} roundness={7} onPress={() => navigation.navigate('ReceivedPage')}/>
+            <PFSecondaryButton title={'Submit Report'} roundness={7} onPress={() => navigation.navigate('CancelledPage')}/>
             </View>
           </View>
           )}

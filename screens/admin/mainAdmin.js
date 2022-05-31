@@ -9,6 +9,8 @@ const Stack = createStackNavigator();
 
 import Admin from './admin';
 import OrderDetails from './orderDetails';
+import AddPlants from './AddPlants';
+import ProductPage from './ProductPage';
 
 function FuncAdminPage({navigation, route}) {
   return (
@@ -19,6 +21,18 @@ function FuncAdminPage({navigation, route}) {
 function FuncOrderDetailsPage({navigation, route}) {
   return (
     <OrderDetails navigation={navigation} route={route}/>
+  );
+}
+
+function FuncAddPlantsPage({navigation, route}) {
+  return (
+    <AddPlants navigation={navigation} route={route}/>
+  );
+}
+
+function FuncProductPage({navigation, route}) {
+  return (
+    <ProductPage navigation={navigation} route={route}/>
   );
 }
 
@@ -49,6 +63,44 @@ function MainAdmin({navigation}) {
           component={FuncOrderDetailsPage}
           options={{ 
             title: 'ALL ORDERS',
+            headerStyle: {
+              backgroundColor: '#1D4123',
+              elevation: 0,
+              shadowOpacity: 0,
+            },
+            headerTintColor: 'white',
+            headerTitleStyle: {
+              fontFamily: 'poppins-semiBold',
+              fontSize: 18,
+            },
+            // headerLeft: null
+          }}
+        />
+
+        <Stack.Screen
+          name="AddPlantsPage"
+          component={FuncAddPlantsPage}
+          options={{ 
+            title: 'Add Plants',
+            headerStyle: {
+              backgroundColor: '#1D4123',
+              elevation: 0,
+              shadowOpacity: 0,
+            },
+            headerTintColor: 'white',
+            headerTitleStyle: {
+              fontFamily: 'poppins-semiBold',
+              fontSize: 18,
+            },
+            // headerLeft: null
+          }}
+        />
+
+        <Stack.Screen
+          name="ProductPage"
+          component={FuncProductPage}
+          options={{ 
+            title: 'Products',
             headerStyle: {
               backgroundColor: '#1D4123',
               elevation: 0,

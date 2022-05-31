@@ -74,7 +74,7 @@ export default function Login ({navigation}) {
             <View style={(keyboardStatus == false ? styles.loginView : styles.loginViewKeyUp)}> 
                 {/* Text Input Area */}
                 <Pressable 
-                    onPress={() => navigation.navigate('Admin')}
+                    onPress={() => navigation.navigate('AdminTabs')}
                     // onLongPress={() => navigation.navigate('FirebaseSample')}
                     >
                     <Text style={styles.headerText}>Welcome Back!</Text>

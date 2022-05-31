@@ -10,6 +10,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 const Stack = createStackNavigator();
 
 import MyTabs from './global/bottomNav';
+import AdminTabs from './global/bottomNav2';
 
 // Import landing screens
 import Login from './screens/landing/Login';
@@ -17,7 +18,7 @@ import ForgotPassword from './screens/landing/ForgotPassword';
 
 // Import admin screen 
 // import Admin from './screens/admin/admin';
-import MainAdmin from './screens/admin/mainAdmin';
+// import MainAdmin from './screens/admin/mainAdmin';
 
 // Import firebase
 import firebase from 'firebase';
@@ -44,6 +45,12 @@ function FuncBottomNav({navigation}) {
   );
 }
 
+function FuncBottomNav2({navigation}) {
+  return(
+    <AdminTabs navigation={navigation}/>
+  );
+}
+
 function FuncLogin({navigation}) {
   return(
     <Login navigation={navigation}/>
@@ -56,11 +63,11 @@ function FuncForgotPassword({navigation}) {
   );
 }
 
-function FuncAdmin({navigation}) {
-  return(
-    <MainAdmin navigation={navigation}/>
-  );
-}
+// function FuncAdmin({navigation}) {
+//   return(
+//     <MainAdmin navigation={navigation}/>
+//   );
+// }
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -85,7 +92,7 @@ function App() {
           >
           <Stack.Screen name="Login" component={FuncLogin} />
           <Stack.Screen name="ForgotPassword" component={FuncForgotPassword} />
-          <Stack.Screen name="Admin" component={FuncAdmin} />
+          <Stack.Screen name="AdminTabs" component={FuncBottomNav2} />
           <Stack.Screen name="MyTabs" component={FuncBottomNav} />
           </Stack.Navigator>
       </NavigationContainer>
