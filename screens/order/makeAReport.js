@@ -18,60 +18,60 @@ import Colors from '../../utils/globalColors';
 import firebase from 'firebase';
 let failedOrders = [
     {
-      orderId: "2110250003",
-      customerName: "Juan Dela Cruz",
-      contactNumber: "+ (63) 956 480 5698",
+      orderId: "U2gcENC0QBbozSuW3Xlp",
+      customerName: "Ian Ermino",
+      contactNumber: "+ (63) 956 491 3444",
       deliveryAddress: "89 ilang-ilang St.Bo.Conception Tala Caloocan City Brgy 188",
     }
 ]
 
 export default function FailedOrderReport({navigation, route}) {
 
-  const [newcomment, setnewcomment] = useState('')
+  // const [newcomment, setnewcomment] = useState('')
 
-  const [refdata, setrefdata] = useState([]); // declaration
-  const [refnull, setrefnull] = useState(true);
+  // const [refdata, setrefdata] = useState([]); // declaration
+  // const [refnull, setrefnull] = useState(true);
 
-  const getData = async() => {
+  // const getData = async() => {
     
-    // Get data inside document
-    firebase.firestore()
-    .collection('Orders').where('orderId', '==', route.params.data).get().then((res) => {
-      let comment = res.docs.map(doc => { 
-        const data = doc.data();
-        const id = doc.id;
-        return {id, ...data}
-      })
-      setrefdata(comment);
-      console.log(refdata);
-      setrefnull(false);
-    }).catch((err) => {
-      Alert.alert(err)
-    })
+  //   // Get data inside document
+  //   firebase.firestore()
+  //   .collection('Orders').where('orderId', '==', route.params.data).get().then((res) => {
+  //     let comment = res.docs.map(doc => { 
+  //       const data = doc.data();
+  //       const id = doc.id;
+  //       return {id, ...data}
+  //     })
+  //     setrefdata(comment);
+  //     console.log(refdata);
+  //     setrefnull(false);
+  //   }).catch((err) => {
+  //     Alert.alert(err)
+  //   })
     
-  }
+  // }
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    getData();
+  //   getData();
   
-  }, [])
+  // }, [])
   
-  function addFailedReports(){
-    navigation.navigate('ReceivedPage');
-    firebase.firestore().collection('FailedOrders').add({
-      orderID: orderID,
-      customerName: customerName,
-      contactNumber: contactNumber,
-      deliveryAddress: deliveryAddress,
-      orderStatus: 'Failed',
-      reason: newcomment
-    }).then((res) => {
-      Alert.alert('Submitted Successfully')
-    }).catch((err) => {
-      Alert.alert(err)
-    })  
-  }
+  // function addFailedReports(){
+  //   navigation.navigate('ReceivedPage');
+  //   firebase.firestore().collection('FailedOrders').add({
+  //     orderId: orderId,
+  //     customerName: customerName,
+  //     contactNumber: contactNumber,
+  //     deliveryAddress: deliveryAddress,
+  //     orderStatus: 'Failed',
+  //     reason: newcomment
+  //   }).then((res) => {
+  //     Alert.alert('Submitted Successfully')
+  //   }).catch((err) => {
+  //     Alert.alert(err)
+  //   })  
+  // }
       // const Create = ()=>{
       //   const myDoc = doc(db, "MyCollection", "MyDocument")
       // }
@@ -103,8 +103,8 @@ export default function FailedOrderReport({navigation, route}) {
     return (
       <View style={styles.container}>
         <PFFlatList
-          noDataMessage='No failedOrders'
-          data={refdata}
+          noDataMessage='No Orders'
+          data={failedOrders}
           renderItem={(item) => (
           <View>
             {/* <TextInput
@@ -114,7 +114,7 @@ export default function FailedOrderReport({navigation, route}) {
             <View style={{marginBottom: 20}}>
               <View style={{flexDirection: 'row', flex: 6}}>
               <PFText size={14}>Order ID:   </PFText>
-              <PFText size={14} weight={'semi-bold'}>{item.orderID}</PFText>
+              <PFText size={14} weight={'semi-bold'}>{item.orderId}</PFText>
               </View>
             </View>
 
@@ -161,7 +161,7 @@ export default function FailedOrderReport({navigation, route}) {
             </View>
 
             <View style={{marginTop: 55}}>
-            <PFSecondaryButton title={'Submit Report'} roundness={7} onPress={() => addFailedReports()}/>
+            <PFSecondaryButton title={'Submit Report'} roundness={7} onPress={() => navigation.navigate('ReceivedPage')}/>
             </View>
           </View>
           )}

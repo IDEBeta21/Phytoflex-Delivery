@@ -13,38 +13,14 @@ import {
   
 import Colors from '../../utils/globalColors';
 
-let arrivedOrders = [
+let failedOrders = [
   {
-    orderId: "2110250000",
-    customerName: "Juan Dela Cruz",
-    contactNumber: "+ (63) 956 480 5698",
+    orderId: "U2gcENC0QBbozSuW3Xlp",
+    customerName: "Ian Ermino",
+    contactNumber: "+ (63) 956 491 3444",
     deliveryAddress: "89 ilang-ilang St.Bo.Conception Tala Caloocan City Brgy 188",
     status: "Failed",
-    reason: "Delivery Address cannot be found"
-  },
-  {
-      orderId: "2110250003",
-      customerName: "Juana Dela Cruz",
-      contactNumber: "+ (63) 956 480 5698",
-      deliveryAddress: "89 ilang-ilang St.Bo.Conception Tala Caloocan City Brgy 188",
-      status: "Failed",
-      reason: "Delivery Address cannot be found"
-  },
-  {
-    orderId: "2110250002",
-    customerName: "Juanito Dela Cruz",
-    contactNumber: "+ (63) 956 480 5698",
-    deliveryAddress: "89 ilang-ilang St.Bo.Conception Tala Caloocan City Brgy 188",
-    status: "Failed",
-    reason: "Delivery Address cannot be found"
-  },
-  {
-    orderId: "2110250001",
-    customerName: "Juanita Dela Cruz",
-    contactNumber: "+ (63) 956 480 5698",
-    deliveryAddress: "89 ilang-ilang St.Bo.Conception Tala Caloocan City Brgy 188",
-    status: "Failed",
-    reason: "Delivery Address cannot be found"
+    reason: "Buyer is unreachable"
   }
 ]
 
@@ -87,12 +63,12 @@ export default function CancelledPage({navigation, route}) {
               <PFText size={18} weight={'semi-bold'}>Today</PFText>
               <PFFlatList
                 noDataMessage='No Orders'
-                data={refdata}
+                data={failedOrders}
                 renderItem={(item) => (
                 <View style={{borderColor: Colors.primary, borderWidth: 1, borderRadius: 5, marginBottom: 10, marginTop: 10, padding: 15,  width: 330  }}>
                   <View style={{marginBottom: 10}}>
                     <View style={{flex: 6}}>
-                      <PFText weight={'semi-bold'}>Order ID: {item.orderID}</PFText>
+                      <PFText weight={'semi-bold'}>Order ID: {item.orderId}</PFText>
                     </View>
                   </View>
 
@@ -106,7 +82,7 @@ export default function CancelledPage({navigation, route}) {
                   <View style={{marginTop: 15}}>
                     <View style={{flexDirection: 'row', flex: 6}}>
                       <PFText size={12}>Status: </PFText>
-                      <PFText size={12} color={'firebrick'}>{item.orderStatus}</PFText>
+                      <PFText size={12} color={'firebrick'}>{item.status}</PFText>
                     </View>
                   </View>
 
