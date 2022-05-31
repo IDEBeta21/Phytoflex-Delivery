@@ -29,6 +29,8 @@ export default function Login ({navigation}) {
         });
     });
     window.userEmail = userEmail
+
+    
     function logInClick() {
         firebase.auth().signInWithEmailAndPassword(userEmail, userPass)
             .then((result) => {
