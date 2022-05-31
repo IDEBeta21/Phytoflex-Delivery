@@ -14,7 +14,7 @@ import PickUpPage from './pickUpPage'
 import FailedOrderReport from './makeAReport'
 import TakePhoto from './takePhoto'
 import ProofOfDelivery from './proofOfDelivery'
-
+import PickUp from './pickUp'
 
 function FuncOrderPage({route, navigation}) {
   return (
@@ -33,6 +33,11 @@ function FuncPickUpPage({route, navigation}) {
     <PickUpOrdersPage navigation={navigation} route = {route}/>
   );
 }
+function FuncPickUp({route, navigation}) {
+  return (
+    <PickUp navigation={navigation} route = {route}/>
+  );
+}
 
 function FuncPickUpHomePage({route, navigation}) {
   return (
@@ -46,15 +51,15 @@ function FuncFailedOrderReportPage({route, navigation}) {
   );
 }
 
-function FuncTakePhoto({navigation}) {
+function FuncTakePhoto({route, navigation}) {
   return (
-    <TakePhoto navigation={navigation}/>
+    <TakePhoto navigation={navigation}  route = {route}/>
   );
 }
 
-function FuncProofOfDelivery({navigation}) {
+function FuncProofOfDelivery({route, navigation}) {
   return (
-    <ProofOfDelivery navigation={navigation}/>
+    <ProofOfDelivery navigation={navigation} route = {route}/>
   );
 }
 
@@ -172,6 +177,23 @@ function App({navigation}) {
           component={FuncProofOfDelivery}
           options={{ 
             title: 'Proof of Delivery',
+            headerStyle: {
+              backgroundColor: '#1D4123',
+              elevation: 0,
+              shadowOpacity: 0
+            },
+            headerTintColor: 'white',
+            headerTitleStyle: {
+              fontFamily: 'poppins-semiBold',
+              fontSize: 18,
+            }
+          }}
+        />
+        <Stack.Screen
+          name="PickUp"
+          component={FuncPickUp}
+          options={{ 
+            title: 'Pick Up Orders',
             headerStyle: {
               backgroundColor: '#1D4123',
               elevation: 0,

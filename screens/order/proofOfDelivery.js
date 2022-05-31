@@ -5,7 +5,9 @@ import firebase from "firebase";
 import { FAB } from 'react-native-paper';
 
 
-export default function ProofOfDelivery({navigation}) {
+export default function ProofOfDelivery({navigation, route}) {
+
+
     return(
 
       <View style={{ flex: 1 }}>
@@ -14,13 +16,14 @@ export default function ProofOfDelivery({navigation}) {
         // alignSelf: 'center'
         }}>
 
+
                     
             <FAB
             small
             icon="camera-outline"
             color="#FFFFFF"
             label='Take a photo'
-            onPress={() => navigation.navigate('TakePhoto')}
+            onPress={() => navigation.navigate('TakePhoto', {orderId: route.params.orderId})}
 
                 style={{
                     backgroundColor: '#2A9C43',

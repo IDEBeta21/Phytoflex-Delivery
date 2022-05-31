@@ -44,14 +44,14 @@ export default function Login ({navigation}) {
                 // Alert.alert(error.message);
                 let str_msg = error.message;
                 console.log(error);
-                ToastAndroid.showWithGravityAndOffset(
-                    // "A wild toast appeared!",
-                    str_msg,
-                    ToastAndroid.LONG,
-                    ToastAndroid.BOTTOM,
-                    0,
-                    150
-                );
+                // ToastAndroid.showWithGravityAndOffset(
+                //     // "A wild toast appeared!",
+                //     str_msg,
+                //     ToastAndroid.LONG,
+                //     ToastAndroid.BOTTOM,
+                //     0,
+                //     150
+                // );
             });
 
             navigation.navigate('MyTabs');
@@ -84,7 +84,7 @@ export default function Login ({navigation}) {
                 <Text style={styles.label}>USERNAME</Text>
                 <TextInput
                     style={styles.textbox}
-                    placeholder="Employee ID"
+                    placeholder="Email Address"
                     onChangeText = {(text) => setuserEmail(text)}
                     value={userEmail}
                 ></TextInput>

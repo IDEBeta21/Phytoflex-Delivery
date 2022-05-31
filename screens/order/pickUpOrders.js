@@ -30,13 +30,15 @@ export default function PickUpOrderPage({navigation, route}) {
     const [refnull2, setrefnull2] = useState(true);
   
     const updateData = async() => {
-      navigation.navigate('PickUpPage');
+    
       // Get data inside document
       firebase.firestore()
       .collection('Orders').where('orderId', '==', route.params.data).get().then((res) => {
         res.forEach(doc => {
           console.log(doc.id, '=>', doc.data());
           const docRef = firebase.firestore().collection('Orders').doc(doc.id);
+              // get doc id
+              navigation.navigate('PickUp', {orderId:doc.id});
               // update ResultMatched
                       docRef.update({
                 ResultMacthed: "True"

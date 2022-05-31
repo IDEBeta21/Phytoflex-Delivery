@@ -27,7 +27,7 @@ let failedOrders = [
 
 export default function FailedOrderReport({navigation, route}) {
 
-  // const [newcomment, setnewcomment] = useState('')
+  const [newcomment, setnewcomment] = useState('')
 
   // const [refdata, setrefdata] = useState([]); // declaration
   // const [refnull, setrefnull] = useState(true);

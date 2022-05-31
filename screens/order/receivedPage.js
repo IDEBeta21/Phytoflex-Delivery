@@ -1,6 +1,6 @@
 import React,  { Component, useState, useEffect } from 'react';
 import {
-  View, Text, StyleSheet, TouchableOpacity, Image, ScrollView
+  View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, RefreshControl
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 
@@ -10,6 +10,7 @@ import {
   PFFlatList
 } from '../../components'
 import firebase from 'firebase'
+import { FAB, Portal, Provider, Title, } from 'react-native-paper';
 
   
 import Colors from '../../utils/globalColors';
@@ -41,6 +42,9 @@ let arrivedOrders = [
   }
 ]
 
+const wait = (timeout) => {
+  return new Promise(resolve => setTimeout(resolve, timeout));
+}
 
 export default function ReceivedPage({navigation, route}) {
   
@@ -49,6 +53,16 @@ export default function ReceivedPage({navigation, route}) {
   today.setMinutes(0);
   today.setMilliseconds(0);
   today.setSeconds(0);
+
+ 
+
+  
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    wait(1000).then(() => setRefreshing(false));
+  }, []);
 
   const [refdata, setrefdata] = useState([]); // declaration
   const [refnull, setrefnull] = useState(true);
@@ -86,9 +100,22 @@ export default function ReceivedPage({navigation, route}) {
   return (
     <View style={styles.container}>
       <View>
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+            />
+          }>
             <View>
+              <View style={{flexDirection : 'column'}}>
               <PFText size={18} weight={'semi-bold'}>Today</PFText>
+              <TouchableOpacity style={{alignItems: 'flex-end', marginRight: 7}} onPress = {() => getData()}>
+                        <Title style={{ color: Colors.primary , marginLeft: 7, fontSize: 15, fontFamily: 'poppins-regular', color: '#1D4123', flex: 1, }}>
+                        Refresh</Title> 
+                      </TouchableOpacity>
+              </View>
+              
               <PFFlatList
                 noDataMessage='No Orders'
                 data={refdata}
@@ -96,7 +123,7 @@ export default function ReceivedPage({navigation, route}) {
                 <View style={{borderColor: Colors.primary, borderWidth: 1, borderRadius: 5, marginBottom: 10, marginTop: 10, padding: 15,  width: 330  }}>
                   <View style={{marginBottom: 10}}>
                     <View style={{flex: 6}}>
-                      <PFText weight={'semi-bold'}>Order ID: {item.orderID}</PFText>
+                      <PFText weight={'semi-bold'}>Order ID: {item.orderId}</PFText>
                     </View>
                   </View>
 
@@ -105,7 +132,7 @@ export default function ReceivedPage({navigation, route}) {
                       <PFText size={16} weight={'semi-bold'}>{item.customerName}</PFText>
                   </View>
                   <PFText>Contact Number: {item.contactNumber}</PFText>
-                  <PFText>Address: {item.deliveryAddres}</PFText>
+                  <PFText>Address: {item.deliveryAddress}</PFText>
 
                   <View style={{flexDirection: 'row', marginTop: 20}}>
                     <View style={{flex:1, paddingRight: 5}}>
@@ -116,7 +143,7 @@ export default function ReceivedPage({navigation, route}) {
                       </View>
                     <View style={{flex:1, paddingLeft: 5}}>
                       <PFSecondaryButton title={'Delivered'} roundness={7} 
-                      onPress={() => navigation.navigate('ProofOfDelivery')}/>
+                      onPress={() => navigation.navigate('ProofOfDelivery', {orderId: item.orderId})}/>
                     </View>
                   </View>
                 </View>

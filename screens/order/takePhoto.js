@@ -5,8 +5,8 @@ import firebase from "firebase";
 import { doc, setDoc, updateDoc } from "firebase/firestore"; 
 
 
-export default function TakePhoto({navigation}) {
-
+export default function TakePhoto({navigation, route}) {
+   let camera;
   const [hasPermission, setHasPermission] = useState(null);
   const [previewVisible, setPreviewVisible] = useState(false);
   const [capturedImage, setCapturedImage] = useState(null);
@@ -28,7 +28,7 @@ export default function TakePhoto({navigation}) {
 
   const takePicture = async () => {
     if (!Camera) return;
-    let photo = await Camera.takePictureAsync();
+    let photo = await camera.takePictureAsync();
     setPreviewVisible(true);
     setCapturedImage(photo); // This code should work but doesn't, it always returns null
     console.log(photo.uri);
@@ -57,12 +57,21 @@ export default function TakePhoto({navigation}) {
       console.log(res);
     })
 
-    // To update imageURL:
-    await firebase.firestore().collection("Orders").doc("ATqcXqNMjWteRH9djU1B").update({
-      "imageURL": imageDirectory,
-      "orderStatus": 'Delivered'
-
-    })
+    
+      // To update imageURL:
+      await  firebase.firestore()
+      .collection('Orders').where('orderId', '==', route.params.orderId).get().then((res) => {
+        res.forEach(doc => {
+          console.log(doc.id, '=>', doc.data());
+          const docRef = firebase.firestore().collection('Orders').doc(doc.id);
+              // update profile picture
+                      docRef.update({
+                       "imageURL": imageDirectory,
+                       orderStatNum: 3,
+                       orderStatus: "Delivered"
+              })
+        })
+      })
     .then(() => {
         console.log("Document successfully updated!");
     });

@@ -25,7 +25,7 @@ let pickUpOrders = [
 
 
 
-export default function PickUpPage({navigation, route}) {
+export default function PickUp({navigation, route}) {
 
   const today = new Date();
 today.setHours(0);
@@ -66,7 +66,7 @@ const [refnull2, setrefnull2] = useState(true);
   }
 
   const pickupOrder = async() => {
-    
+    navigation.navigate('ReceivedPage')
     // Get data inside document
     firebase.firestore()
     .collection('Orders').where('orderId', '==', route.params.orderId).get().then((res) => {
@@ -75,7 +75,8 @@ const [refnull2, setrefnull2] = useState(true);
         const docRef = firebase.firestore().collection('Orders').doc(doc.id);
             // update ResultMatched
                     docRef.update({
-                    orderStatNum: 2
+                    orderStatNum: 2,
+                    orderStatus: "Out of Delivery"
             })
       })
     
@@ -119,8 +120,7 @@ const [refnull2, setrefnull2] = useState(true);
         <View style={{marginTop: 15}}>
           
           <PFText size={18} weight={'semi-bold'}>Today</PFText>
-        
-             <PFFlatList
+            <PFFlatList
               noDataMessage='No Orders'
               data={refdata}
               renderItem={(item) => (
@@ -133,7 +133,12 @@ const [refnull2, setrefnull2] = useState(true);
 
                   <PFText size={16} weight={'semi-bold'}>Name: {item.customerName}</PFText>
                   <PFText>Contact Number: {item.contactNumber}</PFText>
-                  <PFText>Address: {item.deliveryAddress}</PFText>        
+                  <PFText>Address: {item.deliveryAddress}</PFText>
+                  <View style={{flex:1, paddingTop: 10, marginTop: 10}}>
+                      <PFSecondaryButton title={'Pick Order'} roundness={7}
+                      onPress = {() => pickupOrder()}/>
+                    </View>
+
                 </View>
               )}
               keyExtractor={(item,index) => index}
