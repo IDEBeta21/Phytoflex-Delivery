@@ -2,6 +2,7 @@
 
 import { StyleSheet, Text, View, ScrollView, Image, TouchableOpacity, TextInput, Dimensions, Card } from 'react-native'
 import React, {useState} from 'react'
+import { FAB, Provider, Title, } from 'react-native-paper';
 
 import { PFText, PFFlatList, PFSecondaryButton, PFCardShop } from '../../components'
 import Colors from '../../utils/globalColors'
@@ -38,6 +39,7 @@ export default function ProductPage({navigation, route}) {
             </View>
             <View>
                 <PFText weight = "semi-bold" size = {15} style={{marginTop: 5, marginLeft: 12, marginBottom: 5}}>Products</PFText>
+                <ScrollView>
                 {/* <PFFlatList
                     numColumns={2}
                     noDataMessage='No Products'
@@ -57,15 +59,14 @@ export default function ProductPage({navigation, route}) {
                     )}
                     keyExtractor={(item,index) => index}
                 /> */}
-                <View>
-
-                </View>
+                </ScrollView>
             </View>
-
             <View>
-                <TouchableOpacity onPress={() => navigation.push('AddPlantsPage', {})}>
-                    <PFText size={14}weight={'semi-bold'} >NYAAAA</PFText>
-                </TouchableOpacity>
+                <FAB
+                    icon='plus'
+                    style={styles.fab}
+                    onPress={() => navigation.navigate('AddPlantsPage')}
+                />
             </View>
         </View>
     )
@@ -77,11 +78,11 @@ container: {
     backgroundColor: '#fff',
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
-    padding: 15
+    padding: 10
   },
   searchBoxContainer: {
     borderColor: '#1D4123',
-    width: '100%',
+    width: '95%',
     borderWidth: 1,
     backgroundColor: '#F5F7FA',
     paddingHorizontal: 12,
@@ -91,7 +92,7 @@ container: {
     flexDirection: 'row',
     borderRadius: 10,
     color: '#1D4123',
-    marginLeft: 10,
+    marginLeft: 8,
     marginRight: 10
     // flex:1,
   },
@@ -119,6 +120,17 @@ container: {
     paddingLeft: 7,
     margin: 0
   },
+  fab: {
+    position: 'absolute',
+    // margin: 16,
+    // right: 0,
+    bottom: 0,
+    marginBottom: 50,
+    alignSelf: 'flex-end',
+    justifyContent: 'flex-end',
+    // flex: 1,
+    backgroundColor: '#1d4123',
+  }
 })
 
         
