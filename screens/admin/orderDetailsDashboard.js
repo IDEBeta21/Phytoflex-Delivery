@@ -1,9 +1,11 @@
 import { StyleSheet, Text, View, ScrollView, Image, TouchableOpacity, } from 'react-native'
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 
 import { PFText, PFFlatList, PFSecondaryButton } from '../../components'
 import Colors from '../../utils/globalColors'
 import SampleData from '../../utils/SampleData'
+
+import firebase from 'firebase'
 
 
 
@@ -14,9 +16,30 @@ export default function OrderDetailsDashboardPage({navigation, route}) {
       } = route.params
     
       const [deliveryfee, setdeliveryfee] = useState(200)
+      
+      const [itemList, setitemList] = useState([])
     
-      const subtotal = SampleData.orderDetails.reduce((total, currentValue) => total = total + currentValue.price,0);
+      // const subtotal = SampleData.orderDetails.reduce((total, currentValue) => total = total + currentValue.price,0);
+      // const subtotal = itemList.reduce((total, currentValue) => total = total + currentValue.price,0);
+      const subtotal = itemList.reduce((total, currentValue) => total = total + parseInt(currentValue.price),0);
       // setsubtotal(result)
+
+      useEffect(() => {
+    
+        (async () => {
+          firebase.firestore()
+          .collection('Orders').doc(route.params.orderID).get().then((res) => {
+            console.log(res.data().orderedItems)
+            // res.data().forEach(element => {
+            //   console.log(element)
+            // });
+            setitemList(res.data().orderedItems)
+            console.log(itemList)
+            
+          })
+        })()
+        
+      }, [])
     
       return (
         <ScrollView style={{paddingHorizontal: 10, paddingTop: 10, paddingBottom: 20}} showsHorizontalScrollIndicator={false} >
@@ -103,7 +126,7 @@ export default function OrderDetailsDashboardPage({navigation, route}) {
             <View style={{flexDirection: 'row', marginBottom: 15}}>
               <View style={{flex: 9}}>
                 <PFText weight='medium'>
-                  Sub Total ({SampleData.orderDetails.length} items): </PFText>
+                  Sub Total ({itemList.length} items): </PFText>
                   
                 <PFText weight='medium'>
                   Delivery Fee: </PFText>

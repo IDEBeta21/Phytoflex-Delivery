@@ -17,6 +17,8 @@ export default function Login ({navigation}) {
     const [userEmail, setuserEmail] = useState('');
     const [userPass, setUserPass] = useState('');
 
+    const [adminStatus, setadminStatus] = useState(false)
+
 
     const [keyboardStatus, setKeyboardStatus] = useState(false);
 
@@ -34,12 +36,25 @@ export default function Login ({navigation}) {
     function logInClick() {
         firebase.auth().signInWithEmailAndPassword(userEmail, userPass)
             .then((result) => {
-                Alert.alert(result.message);
-                console.log(result);
+                // Alert.alert(result.message);
+                // console.log(result);
+                // if(adminStatus){
+                //     navigation.navigate('MyTabs');
+                // }
+                const user = firebase.auth().currentUser
+                if(user){
+                    firebase.firestore().collection('EmployeeInfo').doc(user.uid).get()
+                    .then((res) => {
+                        if(res.data().adminStatus){
+                            navigation.navigate('AdminTabs')
+                        }else{
+                            navigation.navigate('MyTabs')
+                        }
+                    })
+                }
+                
                 setuserEmail('');
                 setUserPass('');
-                navigation.navigate('MyTabs');
-                
             
             })
             .catch((error) => {
@@ -54,9 +69,10 @@ export default function Login ({navigation}) {
                 //     0,
                 //     150
                 // );
+                Alert.alert('Password is wrong or user does not exist')
             });
 
-            navigation.navigate('MyTabs');
+            // navigation.navigate('MyTabs');
     }
 
     const funcForgotPass = () =>{
