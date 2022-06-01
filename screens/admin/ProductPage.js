@@ -7,18 +7,70 @@ import { StatusBar } from 'expo-status-bar';
 import { 
   PFPrimaryButton, PFSecondaryButton, 
   PFText,
-  PFFlatList
+  PFFlatList, PFCardShop
 } from '../../components'
 
 import Colors from '../../utils/globalColors';
+import SampleData from '../../utils/SampleData';
+
+let plantDetails = [
+    {
+        imageURL: 'https://picsum.photos/700',
+        itemName: 'Gymnocalycium Chin Cactus Small For Sale',
+        category: 'Indoor Plant',
+        price: 549,
+        quantity: 5,
+        sold: 3
+    }
+]
 
 export default function ProductPage({navigation, route}) {
+
+//     const [refdata, setrefdata] = useState([]); // declaration
+//     const [refnull, setrefnull] = useState(true);
+//     const [search, setSearchContent] = useState('');
+
+  
+//     // let userId = window.userId
+
+
+//     const getData = async() => {
+
+//       // Get data inside document
+//       firebase.firestore()
+//       .collection('PlantListItem').get().then((res) => {
+//         let comment = res.docs.map(doc => { 
+//           const data = doc.data();
+//           const id = doc.id;
+//           return {id, ...data}
+//         })
+//         setrefdata(comment);
+//         console.log(refdata);
+//         setrefnull(false);
+//       }).catch((err) => {
+//         Alert.alert(err)
+//       })
+      
+//     }
+    
+    
+//     useEffect(() => {
+
+//         getData();
+    
+//     }, [])
+
+
+//   function toShopSearch() {
+//     navigation.navigate('ShopSearch');
+    
+//   }
 
     return (
         <View style={styles.container}>
             <View style={styles.searchBoxContainer}>
                 <TextInput
-                    style={{fontSize: 15, fontFamily: 'poppins-regular', flex: 1, marginStart: 5, height: 25}}
+                    style={{fontSize: 12, fontFamily: 'poppins-regular', flex: 1, marginStart: 5, height: 20}}
                     placeholder='Search...'
                     onFocus={() => navigation.navigate('')}
                 />
@@ -29,6 +81,28 @@ export default function ProductPage({navigation, route}) {
                         resizeMode='contain'
                     />
                 </View>
+            </View>
+            <View>
+                <PFText weight = "semi-bold" size = {15} style={{marginTop: 5, marginLeft: 12, marginBottom: 5}}>Products</PFText>
+                <PFFlatList
+                    numColumns={2}
+                    noDataMessage='No Products'
+                    data={plantDetails}
+                    renderItem={(item) => (
+                        <PFCardShop
+                            imageURL={item.imageURL}
+                            itemName={item.itemName}
+                            category={item.categoryName}
+                            price={item.price}
+                            quantity={item.quantity}
+                            sold={item.sold}
+                            onPress={() => {navigation.navigate('')
+                
+                            }}
+                        />
+                    )}
+                    keyExtractor={(item,index) => index}
+                />
             </View>
         </View>
     )
@@ -44,7 +118,7 @@ const styles = StyleSheet.create({
       },
       searchBoxContainer: {
         borderColor: '#1D4123',
-        width: '94%',
+        width: '98%',
         borderWidth: 1,
         backgroundColor: '#F5F7FA',
         paddingHorizontal: 12,
@@ -59,7 +133,7 @@ const styles = StyleSheet.create({
         // flex:1,
       },
       searchBoxIcon: {
-        height: 20,
-        width: 20
+        height: 15,
+        width: 15
       },
 })

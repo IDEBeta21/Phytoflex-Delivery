@@ -498,10 +498,10 @@ export default SampleData = {
       orderDetails: [
         {
             imageURL: 'https://picsum.photos/700',
-            itemName: 'Gymnocalycium Chin',
+            itemName: 'Gymnocalycium Chin Cactus Small For Sale',
             category: 'Indoor Plant',
             price: 549,
-            quantity: 1,
+            quantity: 5,
             sold: 3,
             size: "Large"
         },

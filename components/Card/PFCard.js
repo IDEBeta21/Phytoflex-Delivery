@@ -85,25 +85,14 @@ export const PFPostsCard = ({
 );
 
 export const PFCardShop = ({imageURL, category, itemName, price, quantity, sold, onPress = () => {}}, 
-style, cardContentStyle) => {
+style, cardContentStyle) => (
 
-  const [image, setimage] = useState(null)
-  //heart react 
-  const [liked, setLiked] = useState(false);
-  
-
-    firebase.storage().ref().child(imageURL).getDownloadURL().then((url) => {
-      setimage(url);
-    })
-
-    return(
-
-
-      <View style={{...styles.cardShopContainer, ...style}}>
+<View style={{...styles.cardShopContainer, ...style}}>
     <Card stye={{flex: 1}} onPress={() => onPress()}>
       
       <Card.Cover 
-        source={{ uri: image }} 
+        // source={ require('../../assets/drawerIcons/socmedIcons/comments.png')} 
+        source={{ uri : imageURL}} 
         style={{
           height: 140,
           width: (Dimensions.get('window').width/2) * 0.90,
@@ -114,17 +103,7 @@ style, cardContentStyle) => {
 
       <Card.Content style={{...styles.cardShopContent, ...cardContentStyle}}>
         <View style={{flexDirection:'row'}}>
-        <PFText weight='semi-bold'>{itemName}</PFText>
-        <View style={{...styles.heartReact, alignItems:'center'}}>
-        <Pressable onPress={() => setLiked((isLiked) => !isLiked)}>
-       <MaterialCommunityIcons
-        name={liked ? "heart" : "heart-outline"}
-        size={17}
-        color={liked ? "#1D4123" : "#1D4123"}
-      />
-    </Pressable>
-        </View>
-       
+          <PFText weight='semi-bold'>{itemName}</PFText>
         </View>
         <View style={{...styles.textShopContainer}}>
            
@@ -137,6 +116,7 @@ style, cardContentStyle) => {
                 <PFText color={Colors.primary} weight='light'>sold {sold}</PFText>
               </View>
             </View>
+            <PFText weight='light'>{quantity} Stocks Left</PFText>
         </View>
 
       </Card.Content>
@@ -144,11 +124,8 @@ style, cardContentStyle) => {
     </Card>
   </View>
 
-    )
-  
-  
+)
 
-}
   
   
 
