@@ -24,8 +24,49 @@ export default function OrderDetailsDashboardPage({navigation, route}) {
       const subtotal = itemList.reduce((total, currentValue) => total = total + parseInt(currentValue.price),0);
       // setsubtotal(result)
 
-      useEffect(() => {
+      const [refdata, setrefdata] = useState([]); // declaration 
+      const [refnull, setrefnull] = useState(true);
     
+      function getOrders() {
+     
+      
+            firebase.firestore()
+            .collection('Orders').where("orderId", "==", route.params.orderID).get().then((snapshot) => {
+              let users = snapshot.docs.map(doc => { 
+                const data2 = doc.data();
+                const id2 = doc.id;
+                return {id2, ...data2}
+              })
+              setrefdata(users);
+              console.log(refdata);
+              setrefnull(false);
+            }).catch((err) => {
+              Alert.alert(err)
+            })
+          }
+    let orderedItems = "";
+    let itemPic = "";
+   
+    
+      refdata.forEach((item) => {
+         orderedItems = item.orderedItems
+         orderedItems.forEach((items) => {
+          itemPic = items.imageURL
+         })
+      })
+      
+      const [image, setimage] = useState(null)
+      firebase.storage().ref().child(itemPic).getDownloadURL().then((url) => {
+        setimage(url);
+      })
+     
+        
+      useEffect(() => {
+        getOrders()
+      
+        }, [])
+      useEffect(() => {
+       
         (async () => {
           firebase.firestore()
           .collection('Orders').doc(route.params.orderID).get().then((res) => {
@@ -38,6 +79,7 @@ export default function OrderDetailsDashboardPage({navigation, route}) {
             
           })
         })()
+        
         
       }, [])
     
@@ -94,11 +136,11 @@ export default function OrderDetailsDashboardPage({navigation, route}) {
           <PFText size={18} weight={'semi-bold'} >Items</PFText>
           <View style={{borderWidth: 1, borderColor: Colors.primary, borderRadius: 5, paddingHorizontal: 12, marginBottom: 20}}>
             <PFFlatList
-              data={SampleData.orderDetails}
+              data={orderedItems}
               renderItem={(item) => (
                 <View style={{flexDirection: 'row', paddingVertical: 10, }}>
                   <View >
-                    <Image source={{uri : item.imageURL}} style={{height: 50, width: 50, borderRadius: 5}} />
+                    <Image source={{uri : image}} style={{height: 50, width: 50, borderRadius: 5}} />
                   </View>
     
                   <View style={{flex: 1, paddingLeft: 10,}}>
