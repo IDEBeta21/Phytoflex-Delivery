@@ -2,8 +2,8 @@ import * as React from 'react';
 import { Text, View, Image } from 'react-native';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 
-import Dashboard from '../screens/admin/mainAdmin';
-import Orders from '../screens/admin/AddPlants';
+import Dashboard from '../screens/admin/dashboard';
+import Orders from '../screens/admin/mainAdmin';
 import Products from '../screens/admin/ProductPage';
 
 function DashboardScreen({navigation}) {
@@ -12,6 +12,7 @@ function DashboardScreen({navigation}) {
     )
 };
 
+//All Orders previously called admin
 function OrderScreen({navigation}) {
     return (
         <Orders navigation={navigation}/>

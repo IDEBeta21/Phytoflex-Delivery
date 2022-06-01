@@ -15,6 +15,7 @@ import AdminTabs from './global/bottomNav2';
 // Import landing screens
 import Login from './screens/landing/Login';
 import ForgotPassword from './screens/landing/ForgotPassword';
+import OrderDetailsDashboardPage from './screens/admin/orderDetailsDashboard';
 
 // Import admin screen 
 // import Admin from './screens/admin/admin';
@@ -63,6 +64,13 @@ function FuncForgotPassword({navigation}) {
   );
 }
 
+function FuncOrderDetailsDashboardPage({navigation, route}) {
+  return (
+    <OrderDetailsDashboardPage navigation={navigation} route={route}/>
+  );
+}
+
+
 // function FuncAdmin({navigation}) {
 //   return(
 //     <MainAdmin navigation={navigation}/>
@@ -94,6 +102,29 @@ function App() {
           <Stack.Screen name="ForgotPassword" component={FuncForgotPassword} />
           <Stack.Screen name="AdminTabs" component={FuncBottomNav2} />
           <Stack.Screen name="MyTabs" component={FuncBottomNav} />
+
+          
+         {/* <Stack.Screen name="MyTabs" component={FuncBottomNav} /> */}
+          <Stack.Screen
+                name="OrderDetailsDashboardPage"
+                component={FuncOrderDetailsDashboardPage}
+                options={{ 
+                  title: 'Order Details',
+                  headerStyle: {
+                    backgroundColor: '#1D4123',
+                    elevation: 0,
+                    shadowOpacity: 0,
+                  },
+                  headerTintColor: 'white',
+                  headerTitleStyle: {
+                    fontFamily: 'poppins-semiBold',
+                    fontSize: 18,
+                  },
+                  // headerLeft: null
+                }}
+              />
+
+
           </Stack.Navigator>
       </NavigationContainer>
     );

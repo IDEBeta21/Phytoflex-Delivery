@@ -11,6 +11,8 @@ import Admin from './admin';
 import OrderDetails from './orderDetails';
 import AddPlants from './AddPlants';
 import ProductPage from './ProductPage';
+import DashboardPage from './dashboard';
+//import OrderDetailsDashboardPage from './orderDetailsDashboard';
 
 function FuncAdminPage({navigation, route}) {
   return (
@@ -35,6 +37,19 @@ function FuncProductPage({navigation, route}) {
     <ProductPage navigation={navigation} route={route}/>
   );
 }
+
+function FuncDashboardPage({navigation, route}) {
+  return (
+    <DashboardPage navigation={navigation} route={route}/>
+  );
+}
+
+// function FuncOrderDetailsDashboardPage({navigation, route}) {
+//   return (
+//     <OrderDetailsDashboardPage navigation={navigation} route={route}/>
+//   );
+// }
+
 
 function MainAdmin({navigation}) {
   return (
@@ -114,6 +129,45 @@ function MainAdmin({navigation}) {
             // headerLeft: null
           }}
         />
+
+        <Stack.Screen
+          name="DashboardPage"
+          component={FuncDashboardPage}
+          options={{ 
+            title: 'Dashboard',
+            headerStyle: {
+              backgroundColor: '#1D4123',
+              elevation: 0,
+              shadowOpacity: 0,
+            },
+            headerTintColor: 'white',
+            headerTitleStyle: {
+              fontFamily: 'poppins-semiBold',
+              fontSize: 18,
+            },
+            // headerLeft: null
+          }}
+        />
+        {/* <Stack.Screen
+                name="OrderDetailsDashboardPage"
+                component={FuncOrderDetailsDashboardPage}
+                options={{ 
+                  title: 'Order Details',
+                  headerStyle: {
+                    backgroundColor: '#1D4123',
+                    elevation: 0,
+                    shadowOpacity: 0,
+                  },
+                  headerTintColor: 'white',
+                  headerTitleStyle: {
+                    fontFamily: 'poppins-semiBold',
+                    fontSize: 18,
+                  },
+                  // headerLeft: null
+                }}
+              /> */}
+
+
 
       </Stack.Navigator>
   );

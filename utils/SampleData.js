@@ -463,14 +463,17 @@ export default SampleData = {
 
 
 
-
     myOrders : [
+
         {
-            orderId: "2110250003",
-            date: "19 April, 2:48 am",
-            customerName: "Juan Dela Cruz",
-            contactNumber: "+ (63) 956 480 5698",
-            address: "89 ilang-ilang St.Bo.Conception Tala Caloocan City Brgy 188",
+          orderId: "2110250003",
+          date: "19 April, 2:48 am",
+          customerName: "Lorgie Ann",
+          contactNumber: "+ (63) 956 480 5698",
+          address: "89 ilang-ilang St.Bo.Conception Tala Caloocan City Brgy 188",
+          orderID: 'Q9QKZZ1Yec1BGO5H8KKj',
+          total: '1256',
+          status: 'Order Placed',
         },
         {
           orderId: "2110250003",
@@ -478,6 +481,9 @@ export default SampleData = {
           customerName: "Juan Dela Cruz",
           contactNumber: "+ (63) 956 480 5698",
           address: "89 ilang-ilang St.Bo.Conception Tala Caloocan City Brgy 188",
+          orderID: 'U2gcENC0QBbozSuW3Xlp',
+            total: '1256',
+            status: 'Out of Delivery',
         },
         {
           orderId: "2110250003",
@@ -485,15 +491,14 @@ export default SampleData = {
           customerName: "Juan Dela Cruz",
           contactNumber: "+ (63) 956 480 5698",
           address: "89 ilang-ilang St.Bo.Conception Tala Caloocan City Brgy 188",
-        },
-        {
-          orderId: "2110250003",
-          date: "19 April, 2:48 am",
-          customerName: "Juan Dela Cruz",
-          contactNumber: "+ (63) 956 480 5698",
-          address: "89 ilang-ilang St.Bo.Conception Tala Caloocan City Brgy 188",
+          orderID: 'W0ep7fTYMjvDeBWezR1N',
+          total: '12567',
+          status: 'Delivered',
         },
       ],
+
+
+
 
       orderDetails: [
         {

@@ -13,7 +13,7 @@ import {
 import Colors from '../../utils/globalColors';
 import SampleData from '../../utils/SampleData';
 
-export default function ProductPage({navigation, route}) {
+export default function AddPlantsPage({navigation, route}) {
     return(
         <View style={styles.container}>
             <TouchableOpacity style={styles.pickImage}>
