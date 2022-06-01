@@ -139,7 +139,7 @@ export default function DashboardPage({navigation, route}) {
                     orderDate: item.date,
                     customerName: item.customerName,
                     contactNumber: item.contactNumber,
-                    address: item.deliveryAddres
+                    address: item.deliveryAddress
                     
                     })}>
                     <View style={{flexDirection: 'row', borderRadius: 5, paddingTop: 18, paddingLeft: 10, paddingRight: 14, paddingBottom: 18,marginBottom: 10, borderWidth: 1, justifyContent: 'space-between'}}>
