@@ -42,7 +42,7 @@ export default function MyTabs2({navigation}) {
         tabBarIcon: ({focused}) => (
           <View style={{alignItems: 'center', justifyContent: 'center'}}>
           <Image
-          source={require('../assets/assets/order.png')}
+          source={require('../assets/assets/carbon_dashboard.png')}
           resizeMode='contain'
           style={{
             width: 25,
@@ -59,7 +59,7 @@ export default function MyTabs2({navigation}) {
         tabBarIcon: ({focused}) => (
           <View style={{alignItems: 'center', justifyContent: 'center', top: 2}}>
           <Image
-          source={require('../assets/assets/history.png')}
+          source={require('../assets/assets/order.png')}
           resizeMode='contain'
           style={{
             width: 25,
@@ -76,7 +76,7 @@ export default function MyTabs2({navigation}) {
         tabBarIcon: ({focused}) => (
           <View style={{alignItems: 'center', justifyContent: 'center', top: 2}}>
           <Image
-          source={require('../assets/assets/profile.png')}
+          source={require('../assets/assets/gridicons_product-downloadable.png')}
           resizeMode='contain'
           style={{
             width: 25,
