@@ -1,4 +1,4 @@
-import { Text, StyleSheet, SafeAreaView, View, ScrollView, Image, Picker, TouchableOpacity } from 'react-native';
+import { Text, StyleSheet, SafeAreaView, View, ScrollView, Image, Picker, Pressable, TouchableOpacity } from 'react-native';
 import React, { Component, useState} from 'react';
 //import useAutoFocusInputs from 'use-auto-focus-inputs';
 import { TextInput, IconButton, Button } from 'react-native-paper';
@@ -135,22 +135,24 @@ let plantImage = "";
 
     <View style={{flexDirection: 'row',  alignItems:'center', }}>
 
-    <View style={{ 
+    <Pressable
+      onPress={() => openImagePickerAsync()}>
+      <View style={{ 
         flexDirection:'row',
-        
         alignItems:'center',
         justifyContent:'center', marginStart: 12, borderColor: '#B5BFB7', borderWidth: 1, borderRadius: 5, height: 73, width: 73}}>
+        
         <IconButton
           icon="plus"
           color={'#1D4123'}
           size={30}
           // style={{alignSelf: 'center'}}
           style={{alignContent: 'flex-start',}}
-          onPress={() => openImagePickerAsync()}
-       
+          // onPress={() => openImagePickerAsync()}
         />
           
-        </View>
+      </View>
+    </Pressable>
        
         <View style={{ 
         justifyContent:'center', marginStart: 12, borderColor: '#B5BFB7', borderWidth: 1, borderRadius: 5, height: 73, width: 73}}>
