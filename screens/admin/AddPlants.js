@@ -192,13 +192,13 @@ let plantImage = "";
               />
 
         <View style={{  marginTop: 24, flexDirection: "row"}}> 
-            <View style={{ flex: 1, marginTop: 0, backgroundColor: "transparent", marginStart: 12, }}>
+            <View style={{ flex: 1, marginRight: 6, marginTop: 0, backgroundColor: "transparent", marginStart: 12, }}>
               <PFText weight='semi-bold' style={{fontSize: 16, color: '#000000', fontFamily: 'poppins-semiBold'}}>Type</PFText>
               
-              <View style={{ flex: 1, marginTop: 7, alignItems: "center", borderColor: '#B5BFB7', borderWidth: 1, borderRadius: 5}}>
+              <View style={{ flex: 1, marginTop: 7, alignItems: "center", borderColor: '#7C807C', borderWidth: 1, borderRadius: 5}}>
                 <Picker
                   selectedValue={selectedValue}
-                  style={{ height: 50, width: 150 }}
+                  style={{ height: 50, width: 155, }}
                   onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
                 >
                   <Picker.Item label="Low-Maintenance" value="Low-Maintenance" />
@@ -208,12 +208,12 @@ let plantImage = "";
 
             </View>
             
-            <View style={{ flex: 1, backgroundColor: "transparent", marginEnd: 12, }}>
+            <View style={{ flex: 1, marginLeft: 6,  backgroundColor: "transparent", marginEnd: 12, }}>
               <PFText weight='semi-bold' style={{fontSize: 16, color: '#000000', fontFamily: 'poppins-semiBold'}}>Category</PFText>
-              <View style={{ flex: 1, marginTop: 7, alignItems: "center", borderColor: '#B5BFB7', borderWidth: 1, borderRadius: 5}}>
+              <View style={{ flex: 1, marginTop: 7, alignItems: "center", borderColor: '#7C807C', borderWidth: 1, borderRadius: 5}}>
                 <Picker
                   selectedValue={selectedValue}
-                  style={{ height: 50, width: 150 }}
+                  style={{ height: 50, width: 155 }}
                   onValueChange={(itemValue, itemIndex) => setSelectedCategory(itemValue)}
                 >
                   <Picker.Item label="Indoor Plant" value="Indoor Plant" />
@@ -226,7 +226,7 @@ let plantImage = "";
         </View>
 
         <View style={{  marginTop: 24, flexDirection: "row"}}> 
-            <View style={{ flex: 1, marginTop: 0, backgroundColor:  "transparent", marginStart: 12, }}>
+            <View style={{ flex: 1, marginTop: 0, marginRight: 6, backgroundColor:  "transparent", marginStart: 12, }}>
               <PFText weight='semi-bold' style={{fontSize: 16, color: '#000000', fontFamily: 'poppins-semiBold'}}>Stock No.</PFText>
              
               <TextInput
@@ -247,7 +247,7 @@ let plantImage = "";
             
             </View>
             
-            <View style={{ flex: 1, backgroundColor:  "transparent", marginEnd: 12, }}>
+            <View style={{ flex: 1, marginLeft: 6, backgroundColor:  "transparent", marginEnd: 12, }}>
               <PFText weight='semi-bold' style={{fontSize: 16, color: '#000000', fontFamily: 'poppins-semiBold'}}>Set Price</PFText>
               <TextInput
                 style={{borderColor: '#B5BFB7', fontFamily: 'poppins-light', }}
