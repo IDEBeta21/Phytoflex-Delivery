@@ -133,9 +133,9 @@ let plantImage = "";
     contentContainerStyle={{ paddingBottom: 24, paddingTop: 30}}>
       <SafeAreaView>
 
-    <View style={{flexDirection: 'row'}}>
+    <View style={{flexDirection: 'row',  alignItems:'center', }}>
 
-    <View style={{ flex:1,
+    <View style={{ 
         flexDirection:'row',
         
         alignItems:'center',
@@ -145,18 +145,21 @@ let plantImage = "";
           color={'#1D4123'}
           size={30}
           // style={{alignSelf: 'center'}}
-          style={{alignContent: 'center',}}
+          style={{alignContent: 'flex-start',}}
           onPress={() => openImagePickerAsync()}
        
         />
           
         </View>
        
-     
-        <Image
+        <View style={{ 
+        justifyContent:'center', marginStart: 12, borderColor: '#B5BFB7', borderWidth: 1, borderRadius: 5, height: 73, width: 73}}>
+         <Image
             source={{uri : image}}
-            style={{ width:73, height:73, resizeMode: 'contain', borderWidth: 1, borderColor: '#B5BFB7'}}>
+            style={{ height: 73, width: 73, resizeMode: 'contain', borderWidth: 1}}>
         </Image>
+        </View>
+     
     </View>
       
         <PFText weight='semi-bold' style={styles.label}>Plant Name</PFText>
