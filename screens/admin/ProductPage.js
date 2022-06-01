@@ -1,35 +1,127 @@
 
 
-import { StyleSheet, Text, View, ScrollView, Image, TouchableOpacity, } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, Image, TouchableOpacity, TextInput, Dimensions, Card } from 'react-native'
 import React, {useState} from 'react'
 
-import { PFText, PFFlatList, PFSecondaryButton } from '../../components'
+import { PFText, PFFlatList, PFSecondaryButton, PFCardShop } from '../../components'
 import Colors from '../../utils/globalColors'
 import SampleData from '../../utils/SampleData'
 
-
+let plantDetails = [
+    {
+        imageURL: 'https://picsum.photos/700',
+        itemName: 'Gymnocalycium Chin Cactus Small For Sale',
+        category: 'Indoor Plant',
+        price: '549',
+        quantity: '5',
+        sold: '3'
+    }
+]
 
 export default function ProductPage({navigation, route}) {
 
     return (
-        <View>
-        <TouchableOpacity onPress={() => navigation.push('AddPlantsPage', {})}>
-        <PFText size={14}weight={'semi-bold'} >NYAAAA</PFText>
+        <View style={styles.container}>
+            <View style={styles.searchBoxContainer}>
+                <TextInput
+                    style={{fontSize: 12, fontFamily: 'poppins-regular', flex: 1, marginStart: 5, height: 20}}
+                    placeholder='Search...'
+                    onFocus={() => navigation.navigate('')}
+                />
+                <View style={{flex: 1, alignItems: 'flex-end'}}>
+                    <Image
+                        style={styles.searchBoxIcon}
+                        source={require('../../assets/assets/search.png')}
+                        resizeMode='contain'
+                    />
+                </View>
+            </View>
+            <View>
+                <PFText weight = "semi-bold" size = {15} style={{marginTop: 5, marginLeft: 12, marginBottom: 5}}>Products</PFText>
+                {/* <PFFlatList
+                    numColumns={2}
+                    noDataMessage='No Products'
+                    data={plantDetails}
+                    renderItem={(item) => (
+                        <PFCardShop
+                            imageURL={item.imageURL}
+                            itemName={item.itemName}
+                            category={item.categoryName}
+                            price={item.price}
+                            quantity={item.quantity}
+                            sold={item.sold}
+                            onPress={() => {navigation.navigate('')
+                
+                            }}
+                        />
+                    )}
+                    keyExtractor={(item,index) => index}
+                /> */}
+                <View>
 
-        </TouchableOpacity>
-            
+                </View>
+            </View>
+
+            <View>
+                <TouchableOpacity onPress={() => navigation.push('AddPlantsPage', {})}>
+                    <PFText size={14}weight={'semi-bold'} >NYAAAA</PFText>
+                </TouchableOpacity>
+            </View>
         </View>
-    ) }
+    )
+}
 
+const styles = StyleSheet.create({
+container: {
+    flex: 1, 
+    backgroundColor: '#fff',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    padding: 15
+  },
+  searchBoxContainer: {
+    borderColor: '#1D4123',
+    width: '100%',
+    borderWidth: 1,
+    backgroundColor: '#F5F7FA',
+    paddingHorizontal: 12,
+    paddingVertical: 5,
+    marginVertical: 10,
+    alignItems: 'center',
+    flexDirection: 'row',
+    borderRadius: 10,
+    color: '#1D4123',
+    marginLeft: 10,
+    marginRight: 10
+    // flex:1,
+  },
+  searchBoxIcon: {
+    height: 15,
+    width: 15
+  },
+  cardShopContainer: {
+    
+    marginBottom: 5,
+    marginLeft: 4,
+    width: (Dimensions.get('window').width/2) * 0.93,
+    borderWidth: 1, 
+    borderColor: Colors.primary, 
+    borderRadius: 7,
+   
+    
+  },
+  cardShopContent: {
+    marginLeft: 0,
+    flex: 1,
+    padding: 0,
+    paddingTop: 0,
+    paddingBottom: 6,
+    paddingLeft: 7,
+    margin: 0
+  },
+})
 
-
-
-
-
-
-
-
-
+        
 
 
 
@@ -103,73 +195,4 @@ export default function ProductPage({navigation, route}) {
 // //   }
 
 //     return (
-//         <View style={styles.container}>
-//             <View style={styles.searchBoxContainer}>
-//                 <TextInput
-//                     style={{fontSize: 12, fontFamily: 'poppins-regular', flex: 1, marginStart: 5, height: 20}}
-//                     placeholder='Search...'
-//                     onFocus={() => navigation.navigate('')}
-//                 />
-//                 <View style={{flex: 1, alignItems: 'flex-end'}}>
-//                     <Image
-//                         style={styles.searchBoxIcon}
-//                         source={require('../../assets/assets/search.png')}
-//                         resizeMode='contain'
-//                     />
-//                 </View>
-//             </View>
-//             <View>
-//                 <PFText weight = "semi-bold" size = {15} style={{marginTop: 5, marginLeft: 12, marginBottom: 5}}>Products</PFText>
-//                 <PFFlatList
-//                     numColumns={2}
-//                     noDataMessage='No Products'
-//                     data={plantDetails}
-//                     renderItem={(item) => (
-//                         <PFCardShop
-//                             imageURL={item.imageURL}
-//                             itemName={item.itemName}
-//                             category={item.categoryName}
-//                             price={item.price}
-//                             quantity={item.quantity}
-//                             sold={item.sold}
-//                             onPress={() => {navigation.navigate('')
-                
-//                             }}
-//                         />
-//                     )}
-//                     keyExtractor={(item,index) => index}
-//                 />
-//             </View>
-//         </View>
-//     )
-// }
 
-// const styles = StyleSheet.create({
-//     container: {
-//         flex: 1, 
-//         backgroundColor: '#fff',
-//         alignItems: 'center',
-//         justifyContent: 'flex-start',
-//         padding: 15
-//       },
-//       searchBoxContainer: {
-//         borderColor: '#1D4123',
-//         width: '98%',
-//         borderWidth: 1,
-//         backgroundColor: '#F5F7FA',
-//         paddingHorizontal: 12,
-//         paddingVertical: 5,
-//         marginVertical: 10,
-//         alignItems: 'center',
-//         flexDirection: 'row',
-//         borderRadius: 20,
-//         color: '#1D4123',
-//         marginLeft: 10,
-//         marginRight: 10
-//         // flex:1,
-//       },
-//       searchBoxIcon: {
-//         height: 15,
-//         width: 15
-//       },
-// })
