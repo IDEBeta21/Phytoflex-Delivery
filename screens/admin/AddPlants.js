@@ -9,14 +9,109 @@ import {
   PFText 
 } from '../../components';
 import { color } from 'react-native-reanimated';
-
+import firebase from 'firebase';
+import * as ImagePicker from 'expo-image-picker';
 
 export default function AddPlantsPage({navigation, route}) {
+  
+  //adding of photo
+  //choose photo from lib
+ let [selectedImage, setSelectedImage] = React.useState(null);
+
+ let openImagePickerAsync = async () => {
+   let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+   if (permissionResult.granted === false) {
+     alert('Permission to access camera roll is required!');
+     return;
+   }
+
+   let pickerResult = await ImagePicker.launchImageLibraryAsync();
+   if (pickerResult.cancelled === true) {
+     return;
+   }
+
+   setSelectedImage({ localUri: pickerResult.uri });
+   addPlantImage(pickerResult.uri)
+   
+  };
+  const [refdata2, setrefdata2] = useState([]); // declaration
+  const [refnull2, setrefnull2] = useState(true);
+
+
+let plantImage = "";
+ async function addPlantImage(uri){
+
+
+  const blob = await new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+      resolve(xhr.response);
+    };
+    xhr.onerror = function (e) {
+      console.log(e);
+      reject(new TypeError("Network request failed"));
+    };
+    xhr.responseType = "blob";
+    xhr.open("GET", uri, true);
+    xhr.send(null);
+  });
+
+
+  let imageDirectory = 'Shop/PlantImage' + new Date().toString() + '.jpg';
+
+  await firebase.storage().ref().child(imageDirectory).put(blob)
+  .then((res) => {
+    console.log(res);
+  })
+
+  // To get imageURL:  
+   
+    setImage(imageDirectory)
+
+  
+  blob.close();
+  
+}
+
+  function AddPlants() {
+    
+    firebase.firestore().collection('PlantListItem').add({
+      categoryName: selectedCategory,
+      imageURL: image,
+      itemName: title,
+      plantDesc: description,
+      price: price,
+      quantity: stock,
+      size: "Medium",
+      sold: 4,
+      productId: "0"
+    }).then((res) => {
+      console.log(res.id)
+      Alert.alert("Plant item was added successfully!")
+      function updateProductId() {
+          const docRef = firebase.firestore().collection('PlantListItem').doc(res.id);
+              // update doc Id
+                      docRef.update({
+                        productId: res.id
+              })
+      }
+      updateProductId()
+    }).catch((err) => {
+      Alert.alert(err)
+   
+    })
+    
+  }
 
   const [selectedValue, setSelectedValue] = useState("Low-Maintenance");
+  const [selectedCategory, setSelectedCategory] = useState("Indoor Plant");
   
   const [title, settitle] = useState('')
+  const [stock, setStock] = React.useState(null)
+  const [price, setPrice] = React.useState(null)
   const [description, setdescription] = useState('')
+  const [image, setImage] = useState('')
 
   const onContinue = () => {
     navigation.navigate('PlantCareReminder',{
@@ -29,16 +124,20 @@ export default function AddPlantsPage({navigation, route}) {
     })
   }
 
-
+  firebase.storage().ref().child(image).getDownloadURL().then((url) => {
+    setImage(url);
+  })
   return (
 
     <ScrollView 
     contentContainerStyle={{ paddingBottom: 24, paddingTop: 30}}>
       <SafeAreaView>
 
+    <View style={{flexDirection: 'row'}}>
 
-        <View style={{ flex:1,
+    <View style={{ flex:1,
         flexDirection:'row',
+        
         alignItems:'center',
         justifyContent:'center', marginStart: 12, borderColor: '#B5BFB7', borderWidth: 1, borderRadius: 5, height: 73, width: 73}}>
         <IconButton
@@ -47,21 +146,27 @@ export default function AddPlantsPage({navigation, route}) {
           size={30}
           // style={{alignSelf: 'center'}}
           style={{alignContent: 'center',}}
-          onPress={() => console.log('Pressed')}
+          onPress={() => openImagePickerAsync()}
+       
         />
+          
         </View>
-
+       
+     
+        <Image
+            source={{uri : image}}
+            style={{ width:73, height:73, resizeMode: 'contain', borderWidth: 1, borderColor: '#B5BFB7'}}>
+        </Image>
+    </View>
+      
         <PFText weight='semi-bold' style={styles.label}>Plant Name</PFText>
+
           <TextInput
             style={{marginStart: 12, marginEnd: 12, borderColor: '#B5BFB7', }}
                 mode="outlined"
                 placeholder="Cactus Plant for Sale | Same Day Delivery"
-                // label="Outlined input"
                 activeOutlineColor='green'
                 maxLength={50}
-                // multiline={true}
-                // numberOfLines={1}
-                // outlineColor='black'
                 onChangeText={(text) => settitle(text)}
               />
 
@@ -84,7 +189,7 @@ export default function AddPlantsPage({navigation, route}) {
               />
 
         <View style={{  marginTop: 24, flexDirection: "row"}}> 
-            <View style={{ flex: 1, marginTop: 0, backgroundColor: "pink", marginStart: 12, }}>
+            <View style={{ flex: 1, marginTop: 0, backgroundColor: "transparent", marginStart: 12, }}>
               <PFText weight='semi-bold' style={{fontSize: 16, color: '#000000', fontFamily: 'poppins-semiBold'}}>Type</PFText>
               
               <View style={{ flex: 1, marginTop: 7, alignItems: "center", borderColor: '#B5BFB7', borderWidth: 1, borderRadius: 5}}>
@@ -94,49 +199,52 @@ export default function AddPlantsPage({navigation, route}) {
                   onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
                 >
                   <Picker.Item label="Low-Maintenance" value="Low-Maintenance" />
-                  <Picker.Item label="Low-Maintenance" value="Low-Maintenance" />
+                  <Picker.Item label="High-Maintenance" value="High-Maintenance" />
                 </Picker>
               </View>
 
             </View>
             
-            <View style={{ flex: 1, backgroundColor: "orange", marginEnd: 12, }}>
+            <View style={{ flex: 1, backgroundColor: "transparent", marginEnd: 12, }}>
               <PFText weight='semi-bold' style={{fontSize: 16, color: '#000000', fontFamily: 'poppins-semiBold'}}>Category</PFText>
               <View style={{ flex: 1, marginTop: 7, alignItems: "center", borderColor: '#B5BFB7', borderWidth: 1, borderRadius: 5}}>
                 <Picker
                   selectedValue={selectedValue}
                   style={{ height: 50, width: 150 }}
-                  onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+                  onValueChange={(itemValue, itemIndex) => setSelectedCategory(itemValue)}
                 >
                   <Picker.Item label="Indoor Plant" value="Indoor Plant" />
-                  <Picker.Item label="Indoor Plant" value="Indoor Plant" />
+                  <Picker.Item label="Outdoor Plant" value="Outdoor Plant" />
+                  <Picker.Item label="Pots and Planter" value="Pots and Planter" />
+                  <Picker.Item label="Plant Crops" value="Plant Crops" />
                 </Picker>
               </View>
             </View>
         </View>
 
         <View style={{  marginTop: 24, flexDirection: "row"}}> 
-            <View style={{ flex: 1, marginTop: 0, backgroundColor: "skyblue", marginStart: 12, }}>
+            <View style={{ flex: 1, marginTop: 0, backgroundColor:  "transparent", marginStart: 12, }}>
               <PFText weight='semi-bold' style={{fontSize: 16, color: '#000000', fontFamily: 'poppins-semiBold'}}>Stock No.</PFText>
              
               <TextInput
-            style={{borderColor: '#B5BFB7', fontFamily: 'poppins-light', }}
+            style={{borderColor: '#B5BFB7', fontFamily: 'poppins-light'}}
                 mode="outlined"
                 placeholder="6"
                 // label="Outlined input"
                 activeOutlineColor='green'
                 maxLength={4}
+                keyboardType="numeric"
                 // multiline={true}
                 // numberOfLines={1}
                 // outlineColor='black'
-                onChangeText={(text) => settitle(text)}
+                onChangeText={(Number) => setStock(Number)}
               />
 
               
             
             </View>
             
-            <View style={{ flex: 1, backgroundColor: "orange", marginEnd: 12, }}>
+            <View style={{ flex: 1, backgroundColor:  "transparent", marginEnd: 12, }}>
               <PFText weight='semi-bold' style={{fontSize: 16, color: '#000000', fontFamily: 'poppins-semiBold'}}>Set Price</PFText>
               <TextInput
                 style={{borderColor: '#B5BFB7', fontFamily: 'poppins-light', }}
@@ -145,10 +253,11 @@ export default function AddPlantsPage({navigation, route}) {
                     // label="Outlined input"
                     activeOutlineColor='green'
                     maxLength={4}
+                    keyboardType="numeric"
                     // multiline={true}
                     // numberOfLines={1}
                     // outlineColor='black'
-                    onChangeText={(text) => settitle(text)}
+                    onChangeText={(text) => setPrice(text)}
               />
             </View>
         </View>
@@ -160,7 +269,9 @@ export default function AddPlantsPage({navigation, route}) {
           labelStyle={{ color: 'white', fontFamily: 'poppins-semiBold' }}
           // icon="image" 
           mode="contained" 
-          color='#639D04'> Add Plants </Button>
+          color='#639D04'
+          onPress={() => AddPlants()}
+          > Add Plants </Button>
     
 
       </SafeAreaView>
