@@ -16,7 +16,7 @@ import AdminTabs from './global/bottomNav2';
 import Login from './screens/landing/Login';
 import ForgotPassword from './screens/landing/ForgotPassword';
 import OrderDetailsDashboardPage from './screens/admin/orderDetailsDashboard';
-import AddPlantsPage from './screens/admin/addPlants'
+import AddPlantsPage from './screens/admin/mainAddPlants'
 // Import admin screen 
 // import Admin from './screens/admin/admin';
 // import MainAdmin from './screens/admin/mainAdmin';
@@ -134,7 +134,7 @@ function App() {
                 name="AddPlantsPage"
                 component={FuncAddPlantsPage}
                 options={{ 
-                  title: 'Order Details',
+                  title: 'Add Plants',
                   headerStyle: {
                     backgroundColor: '#1D4123',
                     elevation: 0,
