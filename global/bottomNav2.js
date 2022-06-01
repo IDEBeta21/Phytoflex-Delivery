@@ -4,7 +4,7 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 
 import Dashboard from '../screens/admin/mainDashboard';
 import Orders from '../screens/admin/mainAdmin';
-import Products from '../screens/admin/ProductPage';
+import Products from '../screens/admin/mainProductPage';
 
 function DashboardScreen({navigation}) {
     return (

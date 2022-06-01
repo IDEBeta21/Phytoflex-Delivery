@@ -16,7 +16,7 @@ import AdminTabs from './global/bottomNav2';
 import Login from './screens/landing/Login';
 import ForgotPassword from './screens/landing/ForgotPassword';
 import OrderDetailsDashboardPage from './screens/admin/orderDetailsDashboard';
-
+import AddPlantsPage from './screens/admin/addPlants'
 // Import admin screen 
 // import Admin from './screens/admin/admin';
 // import MainAdmin from './screens/admin/mainAdmin';
@@ -70,6 +70,12 @@ function FuncOrderDetailsDashboardPage({navigation, route}) {
   );
 }
 
+function FuncAddPlantsPage({navigation, route}) {
+  return (
+    <AddPlantsPage navigation={navigation} route={route}/>
+  );
+}
+
 
 // function FuncAdmin({navigation}) {
 //   return(
@@ -108,6 +114,25 @@ function App() {
           <Stack.Screen
                 name="OrderDetailsDashboardPage"
                 component={FuncOrderDetailsDashboardPage}
+                options={{ 
+                  title: 'Order Details',
+                  headerStyle: {
+                    backgroundColor: '#1D4123',
+                    elevation: 0,
+                    shadowOpacity: 0,
+                  },
+                  headerTintColor: 'white',
+                  headerTitleStyle: {
+                    fontFamily: 'poppins-semiBold',
+                    fontSize: 18,
+                  },
+                  // headerLeft: null
+                }}
+              />
+
+              <Stack.Screen
+                name="AddPlantsPage"
+                component={FuncAddPlantsPage}
                 options={{ 
                   title: 'Order Details',
                   headerStyle: {

@@ -1,6 +1,6 @@
 import { Text, StyleSheet, SafeAreaView, View, ScrollView, Image, Picker, TouchableOpacity } from 'react-native';
 import React, { Component, useState} from 'react';
-import useAutoFocusInputs from 'use-auto-focus-inputs';
+//import useAutoFocusInputs from 'use-auto-focus-inputs';
 import { TextInput, IconButton, Button } from 'react-native-paper';
 
 // import { PFRadioButton, PFSecondaryButton, PFText } from '../../../components';
@@ -11,7 +11,7 @@ import {
 import { color } from 'react-native-reanimated';
 
 
-export default function AddPlants({navigation, route}) {
+export default function AddPlantsPage({navigation, route}) {
 
   const [selectedValue, setSelectedValue] = useState("Low-Maintenance");
   

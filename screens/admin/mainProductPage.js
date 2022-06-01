@@ -7,11 +7,11 @@ import { StatusBar } from 'expo-status-bar';
 import { createStackNavigator } from '@react-navigation/stack';
 const Stack = createStackNavigator();
 
-import DashboardPage from "./dashboard"
+import ProductPage from "./ProductPage"
 
-function FuncDashboardPage({navigation}) {
+function FuncProductPage({navigation}) {
   return (
-    <DashboardPage navigation={navigation}/>
+    <ProductPage navigation={navigation}/>
   );
 }
 
@@ -19,11 +19,11 @@ function App({navigation}) {
   return (
       <Stack.Navigator>
       
-       <Stack.Screen
-          name="DashboardPage"
-          component={FuncDashboardPage}
+               <Stack.Screen
+          name="ProductPage"
+          component={FuncProductPage}
           options={{ 
-            title: 'Dashboard',
+            title: 'Products',
             headerStyle: {
               backgroundColor: '#1D4123',
               elevation: 0,
@@ -37,6 +37,7 @@ function App({navigation}) {
              headerLeft: null
           }}
         />
+
       </Stack.Navigator>
   );
 }

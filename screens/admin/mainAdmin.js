@@ -9,7 +9,7 @@ const Stack = createStackNavigator();
 
 import Admin from './admin';
 import OrderDetails from './orderDetails';
-import AddPlants from './AddPlants';
+import AddPlants from './addPlants';
 import ProductPage from './ProductPage';
 import DashboardPage from './dashboard';
 //import OrderDetailsDashboardPage from './orderDetailsDashboard';
@@ -111,7 +111,7 @@ function MainAdmin({navigation}) {
           }}
         />
 
-        <Stack.Screen
+        {/* <Stack.Screen
           name="ProductPage"
           component={FuncProductPage}
           options={{ 
@@ -128,7 +128,7 @@ function MainAdmin({navigation}) {
             },
             // headerLeft: null
           }}
-        />
+        /> */}
 
         
         {/* <Stack.Screen
