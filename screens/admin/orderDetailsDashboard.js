@@ -6,6 +6,7 @@ import Colors from '../../utils/globalColors'
 import SampleData from '../../utils/SampleData'
 
 import firebase from 'firebase'
+import { StatusBar } from 'expo-status-bar'
 
 
 
@@ -84,7 +85,8 @@ export default function OrderDetailsDashboardPage({navigation, route}) {
       }, [])
     
       return (
-        <ScrollView style={{paddingHorizontal: 10, paddingTop: 10, paddingBottom: 20}} showsHorizontalScrollIndicator={false} >
+        <ScrollView style={{paddingHorizontal: 10, paddingTop: 10, paddingBottom: 20, marginTop: 25}} showsHorizontalScrollIndicator={false} >
+          <StatusBar style='auto'/>
           <View style={{flexDirection: 'row'}}>
             <View style={{flex: 1, flexDirection: 'row'}}>
               {/* <PFText size={16} weight={'medium'} >Order ID: </PFText>
@@ -136,7 +138,7 @@ export default function OrderDetailsDashboardPage({navigation, route}) {
           <PFText size={18} weight={'semi-bold'} >Items</PFText>
           <View style={{borderWidth: 1, borderColor: Colors.primary, borderRadius: 5, paddingHorizontal: 12, marginBottom: 20}}>
             <PFFlatList
-              data={orderedItems}
+              data={itemList}
               renderItem={(item) => (
                 <View style={{flexDirection: 'row', paddingVertical: 10, }}>
                   <View >
@@ -198,6 +200,8 @@ export default function OrderDetailsDashboardPage({navigation, route}) {
       )
     }
     
-    const styles = StyleSheet.create({})
+    const styles = StyleSheet.create({
+
+    })
 
 
