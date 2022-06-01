@@ -1,12 +1,15 @@
 
 
-import { StyleSheet, Text, View, ScrollView, Image, TouchableOpacity, TextInput, Dimensions, Card } from 'react-native'
-import React, {useState} from 'react'
-import { FAB, Provider, Title, } from 'react-native-paper';
+import { StyleSheet, Text, View, ScrollView, Image, TouchableOpacity, TextInput, Dimensions } from 'react-native'
+import React, { Component, useState, useEffect } from 'react';
+import { FAB, Provider, Title, Card} from 'react-native-paper';
 
-import { PFText, PFFlatList, PFSecondaryButton, PFCardShop } from '../../components'
+
+import { PFText, PFFlatList, PFSecondaryButton } from '../../components'
 import Colors from '../../utils/globalColors'
 import SampleData from '../../utils/SampleData'
+import firebase from 'firebase'
+import { Alert } from 'react-native-web';
 
 let plantDetails = [
     {
@@ -18,11 +21,89 @@ let plantDetails = [
         sold: '3'
     }
 ]
+const PFCardShop = ({imageURL, category, itemName, price, quantity, sold, onPress = () => {}}, 
+style, cardContentStyle) => {
+    const [image, setimage] = useState(null)
+firebase.storage().ref().child(imageURL).getDownloadURL().then((url) => {
+  setimage(url);
+})
+
+    return(
+        <View style={{...styles.cardShopContainer, ...style}}>
+        <Card style={{flex: 1}} onPress={() => onPress()}>
+          
+          <Card.Cover 
+          
+            source={{ uri : image}} 
+            style={{
+              height: 140,
+              width: (Dimensions.get('window').width/2) * 0.90,
+              margin: 2,
+              borderRadius: 8
+            }}
+          />
+    
+          <Card.Content style={{...styles.cardShopContent, ...cardContentStyle}}>
+            <View style={{flexDirection:'row'}}>
+              <PFText weight='semi-bold'>{itemName}</PFText>
+            </View>
+            <View style={{...styles.textShopContainer}}>
+               
+                <PFText weight='semi-bold'>{category}</PFText>
+                <View style={{flex:1, flexDirection: 'row'}}>
+                  <View style={{flex: 1}}>
+                    <PFText color={Colors.secondary} weight='semi-bold'>P {price}</PFText>
+                  </View>
+                  <View style={{flex: 1, alignItems: 'flex-end'}}>
+                    <PFText color={Colors.primary} weight='light'>sold {sold}</PFText>
+                  </View>
+                </View>
+                <PFText weight='light'>{quantity} Stocks Left</PFText>
+            </View>
+    
+          </Card.Content>
+          
+        </Card>
+      </View>
+    
+
+    )
+   
+}
 
 export default function ProductPage({navigation, route}) {
 
+const [refdata, setrefdata] = useState([]); // declaration
+const [refnull, setrefnull] = useState(true);
+
+  const getData = async() => {
+
+    // Get data inside document
+    firebase.firestore()
+    .collection('PlantListItem').get().then((res) => {
+      let comment = res.docs.map(doc => { 
+        const data = doc.data();
+        const id = doc.id;
+        return {id, ...data}
+      })
+      setrefdata(comment);
+      console.log(refdata);
+      setrefnull(false);
+    }).catch((err) => {
+      Alert.alert(err)
+    })
+    
+  }
+
+    useEffect(() => {
+        getData();
+    }, []);
+
+
     return (
         <View style={styles.container}>
+            <ScrollView showsVerticalScrollIndicator={false}>
+           
             <View style={styles.searchBoxContainer}>
                 <TextInput
                     style={{fontSize: 12, fontFamily: 'poppins-regular', flex: 1, marginStart: 5, height: 20}}
@@ -37,37 +118,40 @@ export default function ProductPage({navigation, route}) {
                     />
                 </View>
             </View>
-            <View>
+           
                 <PFText weight = "semi-bold" size = {15} style={{marginTop: 5, marginLeft: 12, marginBottom: 5}}>Products</PFText>
-                <ScrollView>
-                {/* <PFFlatList
-                    numColumns={2}
-                    noDataMessage='No Products'
-                    data={plantDetails}
-                    renderItem={(item) => (
-                        <PFCardShop
-                            imageURL={item.imageURL}
-                            itemName={item.itemName}
-                            category={item.categoryName}
-                            price={item.price}
-                            quantity={item.quantity}
-                            sold={item.sold}
-                            onPress={() => {navigation.navigate('')
-                
-                            }}
-                        />
-                    )}
-                    keyExtractor={(item,index) => index}
-                /> */}
-                </ScrollView>
-            </View>
-            <View>
+               
+                <PFFlatList
+            numColumns={2}
+            noDataMessage='No Products'
+            data={refdata}
+            renderItem={(item) => (
+              <PFCardShop
+                imageURL={item.imageURL}
+                itemName={item.itemName}
+                category={item.categoryName}
+                price={item.price}
+                quantity={item.quantity}
+                sold={item.sold}
+                onPress={() => Alert.alert(item.itemName)}
+              />
+            )}
+            keyExtractor={(item,index) => index}
+          />
+              </ScrollView>
+            
+         
                 <FAB
                     icon='plus'
                     style={styles.fab}
+                    placement= "right" 
+                    size= "large" 
+                    upperCase
+                    buttonStyle= {{ backgroundColor: "#639D04", borderRadius: 25 }}
                     onPress={() => navigation.navigate('AddPlantsPage')}
                 />
-            </View>
+          
+          
         </View>
     )
 }
@@ -78,7 +162,8 @@ container: {
     backgroundColor: '#fff',
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
-    padding: 10
+   
+    alignSelf: 'center'
   },
   searchBoxContainer: {
     borderColor: '#1D4123',
@@ -125,10 +210,10 @@ container: {
     // margin: 16,
     // right: 0,
     bottom: 0,
-    marginBottom: 50,
-    alignSelf: 'flex-end',
+    marginBottom: 30,
+    
     justifyContent: 'flex-end',
-    // flex: 1,
+    marginStart: 270,
     backgroundColor: '#1d4123',
   }
 })
