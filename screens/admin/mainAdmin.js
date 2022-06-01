@@ -130,24 +130,7 @@ function MainAdmin({navigation}) {
           }}
         />
 
-        <Stack.Screen
-          name="DashboardPage"
-          component={FuncDashboardPage}
-          options={{ 
-            title: 'Dashboard',
-            headerStyle: {
-              backgroundColor: '#1D4123',
-              elevation: 0,
-              shadowOpacity: 0,
-            },
-            headerTintColor: 'white',
-            headerTitleStyle: {
-              fontFamily: 'poppins-semiBold',
-              fontSize: 18,
-            },
-            // headerLeft: null
-          }}
-        />
+        
         {/* <Stack.Screen
                 name="OrderDetailsDashboardPage"
                 component={FuncOrderDetailsDashboardPage}

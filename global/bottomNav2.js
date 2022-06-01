@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Text, View, Image } from 'react-native';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 
-import Dashboard from '../screens/admin/dashboard';
+import Dashboard from '../screens/admin/mainDashboard';
 import Orders from '../screens/admin/mainAdmin';
 import Products from '../screens/admin/ProductPage';
 
@@ -19,9 +19,9 @@ function OrderScreen({navigation}) {
     )
 };
 
-function ProductScreen({navigation}) {
+function ProductScreen({navigation,route}) {
     return (
-        <Products navigation={navigation}/>
+        <Products navigation={navigation} route={route}/>
     )
 };
 
@@ -70,7 +70,7 @@ export default function MyTabs2({navigation}) {
         ),
       }}  />
 
-      <ButtomNavTab.Screen name="Profile" component={ProductScreen}
+      <ButtomNavTab.Screen name="Products" component={ProductScreen}
       options={{
         tabBarLabel: <Text style={{ fontSize: 12, fontFamily: 'poppins-regular' }}> Products </Text> ,
         tabBarIcon: ({focused}) => (
