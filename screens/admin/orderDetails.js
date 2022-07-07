@@ -23,6 +23,11 @@ export default function OrderDetails({navigation, route}) {
   const [itemList, setitemList] = useState([])
   const [fbImageURL, setfbImageURL] = useState('')
 
+  
+  const [refdata, setrefdata] = useState([]); // declaration 
+  
+  
+
   useEffect(() => {
     
     (async () => {
@@ -34,6 +39,12 @@ export default function OrderDetails({navigation, route}) {
         // });
         setitemList(res.data().orderedItems)
         console.log(itemList)
+        let users = res.docs.map(doc => { 
+          const data2 = doc.data();
+          const id2 = doc.id;
+          return {id2, ...data2}
+        })
+        setrefdata(users)
         
       })
     })()
@@ -94,6 +105,21 @@ export default function OrderDetails({navigation, route}) {
 //     <img id='qrcode' src="https://api.qrserver.com/v1/create-qr-code/?data=${route.params.orderId}&amp;size=500x500" alt="" title="HELLO" width="300" height="300" />
 //   </body>
 // </html>
+
+  let orderedItems = "";
+  let itemPic = "";
+
+  refdata.forEach((item) => {
+    orderedItems = item.orderedItems
+    orderedItems.forEach((items) => {
+     itemPic = items.imageURL
+    })
+  })
+ 
+  const [image, setimage] = useState(null)
+  firebase.storage().ref().child(itemPic).getDownloadURL().then((url) => {
+    setimage(url);
+  })
 
   const [deliveryfee, setdeliveryfee] = useState(200)
 
@@ -274,7 +300,8 @@ export default function OrderDetails({navigation, route}) {
             <View style={{flexDirection: 'row', paddingVertical: 10, }}>
               <View >
                 {/* <Image source={{uri : item.imageURL}} style={{height: 50, width: 50, borderRadius: 5}} /> */}
-                <Image source={{uri : getImageUrl(item.imageURL)}} style={{height: 50, width: 50, borderRadius: 5}} />
+                {/* <Image source={{uri : getImageUrl(item.imageURL)}} style={{height: 50, width: 50, borderRadius: 5}} /> */}
+                <Image source={{uri : image}} style={{height: 50, width: 50, borderRadius: 5}} />
               </View>
 
               <View style={{flex: 1, paddingLeft: 10,}}>

@@ -21,7 +21,7 @@ export default function pendingOrders({navigation, route}) {
   useEffect(() => {
     (async () =>{
       await firebase.firestore()
-      .collection('Orders').get().then((snapShot) => {
+      .collection('Orders').where('orderStatus', '==' , 'Order Placed').get().then((snapShot) => {
           // console.log("Document data:", doc.data());
           // snapShot.docs.forEach((doc) => {
           //   console.log(doc.data())
